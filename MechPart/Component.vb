@@ -5,6 +5,7 @@
     Public Agility As Integer
     Public Accuracy As Integer
     Public Range As Integer
+    Public Hands As Integer
     Public DamageAmount As Integer
     Public DamageType As DamageType
     Public ReadOnly Property IsNotEmpty As Boolean
@@ -49,6 +50,7 @@
             Case "Agility" : Agility = CInt(value)
             Case "Accuracy" : Accuracy = CInt(value)
             Case "Range" : Range = CInt(value)
+            Case "Hands" : Hands = CInt(value)
             Case "DamageAmount" : DamageAmount = CInt(value)
             Case "DamageType"
                 For Each dt In [Enum].GetValues(GetType(DamageType))

@@ -6,3 +6,6 @@ C:\Users\Owner\documents\visual studio 2010\Projects\DemonMech\DemonMech\obj\x86
 C:\Users\Owner\documents\visual studio 2010\Projects\DemonMech\DemonMech\obj\x86\Debug\DemonMech.exe
 C:\Users\Owner\documents\visual studio 2010\Projects\DemonMech\DemonMech\obj\x86\Debug\DemonMech.xml
 C:\Users\Owner\documents\visual studio 2010\Projects\DemonMech\DemonMech\obj\x86\Debug\DemonMech.pdb
+D:\Visual Studio Projects\demonmech\obj\x86\Debug\DemonMech.exe
+D:\Visual Studio Projects\demonmech\obj\x86\Debug\DemonMech.xml
+D:\Visual Studio Projects\demonmech\obj\x86\Debug\DemonMech.pdb

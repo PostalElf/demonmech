@@ -1,20 +1,36 @@
 ﻿Public Class MechPart
-    Private Name As String
-    Private Weight As Integer
-    Private Agility As Integer
-    Private Range As Integer
-    Private Accuracy As Integer
-    Private Damage As New Dictionary(Of DamageType, Integer)
+    Public Name As String
+    Public Slot As String
+    Public HandSpace As Integer
+    Public Weight As Integer
+    Public Agility As Integer
+    Public Range As Integer
+    Public Hands As Integer
+    Public Accuracy As Integer
+    Public Damage As New Dictionary(Of DamageType, Integer)
 
-    Public Shared Function Construct(ByVal blueprintName As String, ByVal Components As List(Of Component)) As MechPart
+    Public Shared Function Construct(ByVal blueprintName As String, ByVal mechPartSlot As String, ByVal Components As List(Of Component)) As MechPart
         Dim MechPart As New MechPart
         With MechPart
             .Name = blueprintName
+
+            'check for handedness in mechPartSlot
+            If mechPartSlot.StartsWith("Hand") Then
+                Dim raw As String() = mechPartSlot.Split(" ")
+                Dim value As Integer = CInt(raw(1))
+                .Slot = "Hand"
+                .HandSpace = value
+            Else
+                .Slot = mechPartSlot
+            End If
+
+            .Slot = mechPartSlot
             For Each Component In Components
                 .Weight += Component.Weight
                 .Agility += Component.Agility
-                .Accuracy += Component.Accuracy
                 .Range += Component.Range
+                .Hands += Component.Hands
+                .Accuracy += Component.Accuracy
                 If Component.DamageType <> 0 Then .Damage(Component.DamageType) += Component.DamageAmount
             Next
 

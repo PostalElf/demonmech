@@ -1,5 +1,6 @@
 ﻿Public Class Blueprint
     Private Name As String
+    Private MechPartSlot As String
     Private ComponentsCompulsory As New List(Of String)
     Private ComponentsFilled As New List(Of String)
     Private Components As New List(Of Component)
@@ -25,6 +26,7 @@
     End Function
     Public Sub Construct(ByVal key As String, ByVal value As String)
         Select Case key
+            Case "Slot" : MechPartSlot = value
             Case "Component" : ComponentsCompulsory.Add(value)
             Case Else : BlueprintModifiers.Construct(key, value)
         End Select
@@ -33,7 +35,7 @@
     Public Function ConstructMechPart() As MechPart
         If ComponentsCompulsory.Count > 0 Then Return Nothing
         If BlueprintModifiers Is Nothing = False AndAlso BlueprintModifiers.IsNotEmpty = True Then Components.Add(BlueprintModifiers)
-        Return MechPart.Construct(Name, Components)
+        Return MechPart.Construct(Name, MechPartSlot, Components)
     End Function
 
     Public Function AddComponent(ByVal component As Component) As String

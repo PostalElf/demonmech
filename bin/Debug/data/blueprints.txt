@@ -1,4 +1,5 @@
 [Lasergun]
+Slot: Hand
 Component: Focus
 Component: Heat Exchanger
 Component: Gun Chasis

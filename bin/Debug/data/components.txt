@@ -1,0 +1,17 @@
+[Hellstone Crystal]
+Category: Focus
+Weight: 1
+Accuracy: 5
+
+[Hellstone Circuit]
+Category: Heat Exchanger
+Weight: 1
+DamageType: Energy
+DamageAmount: 1
+
+[Revolver Chasis]
+Category: Gun Chasis
+Weight: 5
+Range: -1
+DamageAmount: 5
+DamageType: Energy

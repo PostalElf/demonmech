@@ -1,0 +1,9 @@
+[Lasergun]
+Component: Focus
+Component: Heat Exchanger
+Component: Gun Chasis
+Weight: 1
+Accuracy: 60
+Range: 3
+DamageType: Energy
+DamageAmount: 1

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DemonMech", "DemonMech.vbproj", "{395F4956-3B18-452E-9458-E29343914A20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{395F4956-3B18-452E-9458-E29343914A20}.Debug|x86.ActiveCfg = Debug|x86
+		{395F4956-3B18-452E-9458-E29343914A20}.Debug|x86.Build.0 = Debug|x86
+		{395F4956-3B18-452E-9458-E29343914A20}.Release|x86.ActiveCfg = Release|x86
+		{395F4956-3B18-452E-9458-E29343914A20}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

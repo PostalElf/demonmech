@@ -70,6 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MechPart\MechPart.vb" />
+    <Compile Include="Mech\Mech.vb" />
+    <Compile Include="Mech\MechDesign.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

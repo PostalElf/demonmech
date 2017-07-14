@@ -5,7 +5,8 @@
     Public Weight As Integer
     Public Agility As Integer
     Public Range As Integer
-    Public Hands As Integer
+    Public ExtraHands As Integer
+    Public HandWeaponSpace As Integer
     Public Accuracy As Integer
     Public Damage As New Dictionary(Of DamageType, Integer)
 
@@ -18,18 +19,17 @@
             If mechPartSlot.StartsWith("Handweapon") Then
                 Dim raw As String() = mechPartSlot.Split(" ")
                 Dim value As Integer = CInt(raw(1))
-                .Slot = "Hand"
+                .Slot = "Handweapon"
                 .HandSpace = value
             Else
                 .Slot = mechPartSlot
             End If
 
-            .Slot = mechPartSlot
             For Each Component In Components
                 .Weight += Component.Weight
                 .Agility += Component.Agility
                 .Range += Component.Range
-                .Hands += Component.Hands
+                .ExtraHands += Component.ExtraHands
                 .Accuracy += Component.Accuracy
                 If Component.DamageType <> 0 Then .Damage(Component.DamageType) += Component.DamageAmount
             Next
@@ -44,4 +44,7 @@
             Damage.Add(dt, 0)
         Next
     End Sub
+    Public Overrides Function ToString() As String
+        Return Name
+    End Function
 End Class

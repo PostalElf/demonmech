@@ -1,4 +1,4 @@
 [Sloth]
-Slot: Chasis
+Slot: Mech Chasis
 Slot: Arm
 Inventory: 2

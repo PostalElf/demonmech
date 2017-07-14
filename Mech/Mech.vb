@@ -2,10 +2,20 @@
     Private Name As String
     Private DesignName As String
     Private MechParts As New List(Of MechPart)
+    Private MechDesignModifiers As MechPart
 
     Private HandWeaponsInventory As New List(Of MechPart)
     Private HandWeaponsEquipped As New List(Of MechPart)
-    Private Hands As Integer
+    Private ReadOnly Property Hands As Integer
+        Get
+            Dim total As Integer = 0
+            For Each mp In MechParts
+                total += mp.ExtraHands
+            Next
+            total += MechDesignModifiers.ExtraHands
+            Return total
+        End Get
+    End Property
     Private ReadOnly Property UsedHands As Integer
         Get
             Dim total As Integer = 0
@@ -21,24 +31,28 @@
         End Get
     End Property
 
-    Public Shared Function Construct(ByVal mechName As String, ByVal mechDesignName As String, ByVal mechparts As List(Of MechPart), ByVal inventory As List(Of MechPart)) As Mech
+    Public Shared Function Construct(ByVal mechName As String, ByVal mechDesignName As String, ByVal mechparts As List(Of MechPart), ByVal inventory As List(Of MechPart), ByVal mechDesignModifiers As MechPart) As Mech
         Dim mech As New Mech
         With mech
             .Name = mechName
             .DesignName = mechDesignName
             .MechParts.AddRange(mechparts)
             .HandWeaponsInventory.AddRange(inventory)
+            .MechDesignModifiers = mechDesignModifiers
         End With
         Return mech
     End Function
+    Public Overrides Function ToString() As String
+        Return Name
+    End Function
 
-    Private Function EquipHandWeapon(ByVal mechpart As MechPart) As String
+    Public Function EquipHandWeapon(ByVal mechpart As MechPart) As String
         If HandWeaponsInventory.Contains(mechpart) = False Then Return "Weapon not in inventory"
         If FreeHands < mechpart.HandSpace Then Return "Insufficient hands"
         HandWeaponsEquipped.Add(mechpart)
         Return Nothing
     End Function
-    Private Function UnequipHandWeapon(ByVal mechpart As MechPart) As String
+    Public Function UnequipHandWeapon(ByVal mechpart As MechPart) As String
         If HandWeaponsInventory.Contains(mechpart) = False Then Return "Weapon not in inventory"
         If HandWeaponsEquipped.Contains(mechpart) = False Then Return "Weapon not equipped"
         HandWeaponsEquipped.Remove(mechpart)

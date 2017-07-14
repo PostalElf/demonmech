@@ -11,6 +11,17 @@
         mechArmBlueprint.AddComponent(Component.Load("EM Motor"))
         mechArmBlueprint.AddComponent(Component.Load("Nanosteel Plate"))
         Dim mechArm As MechPart = mechArmBlueprint.ConstructMechPart
+
+        Dim chasisBlueprint As Blueprint = Blueprint.Load("Nanocarbon Mech Chasis")
+        chasisBlueprint.AddComponent(Component.Load("Nanosteel Plate"))
+        Dim chasis As MechPart = chasisBlueprint.ConstructMechPart
+
+        Dim slothDesign As MechDesign = MechDesign.Load("Sloth")
+        slothDesign.AddMechPart(mechArm)
+        slothDesign.AddMechPart(chasis)
+        slothDesign.AddMechPart(lasergun)
+        Dim sloth As Mech = slothDesign.ConstructMech("Sloth v1")
+        sloth.EquipHandWeapon(lasergun)
     End Sub
 
 End Module

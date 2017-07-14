@@ -15,3 +15,8 @@ Component: Motor
 Component: Material - Plate
 Weight: 1
 Hands: 1
+
+[Nanocarbon Mech Chasis]
+Slot: Mech Chasis
+Component: Material - Plate
+Weight: 5

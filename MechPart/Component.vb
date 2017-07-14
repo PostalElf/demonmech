@@ -25,10 +25,7 @@
 
     Public Shared Function Load(ByVal targetname As String) As Component
         Const path As String = "data/components.txt"
-        Return Construct(SquareBracketLoader(path, targetname))
-    End Function
-    Public Shared Function Construct(ByVal q As Queue(Of String)) As Component
-        If q Is Nothing OrElse q.Count = 0 Then Return Nothing
+        Dim q As Queue(Of String) = SquareBracketLoader(path, targetname)
 
         Dim component As New Component
         With component

@@ -9,9 +9,7 @@
     Public Shared Function Load(ByVal blueprintName As String) As Blueprint
         Const path As String = "data/blueprints.txt"
         Dim q As Queue(Of String) = SquareBracketLoader(path, blueprintName)
-        Return Construct(q)
-    End Function
-    Public Shared Function Construct(ByVal q As Queue(Of String)) As Blueprint
+
         Dim blueprint As New Blueprint
         With blueprint
             .Name = q.Dequeue()
@@ -31,7 +29,6 @@
             Case Else : BlueprintModifiers.Construct(key, value)
         End Select
     End Sub
-
     Public Function ConstructMechPart() As MechPart
         If ComponentsCompulsory.Count > 0 Then Return Nothing
         If BlueprintModifiers Is Nothing = False AndAlso BlueprintModifiers.IsNotEmpty = True Then Components.Add(BlueprintModifiers)

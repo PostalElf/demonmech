@@ -15,7 +15,7 @@
             .Name = blueprintName
 
             'check for handedness in mechPartSlot
-            If mechPartSlot.StartsWith("Hand") Then
+            If mechPartSlot.StartsWith("Handweapon") Then
                 Dim raw As String() = mechPartSlot.Split(" ")
                 Dim value As Integer = CInt(raw(1))
                 .Slot = "Hand"

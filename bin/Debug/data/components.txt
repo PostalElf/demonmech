@@ -15,3 +15,11 @@ Weight: 5
 Range: -1
 DamageAmount: 5
 DamageType: Energy
+
+[EM Motor]
+Category: Motor
+Weight: 1
+
+[Nanosteel Plate]
+Category: Material - Plate
+Weight: 2

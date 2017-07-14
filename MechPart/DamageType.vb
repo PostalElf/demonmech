@@ -1,5 +1,7 @@
 ﻿Public Enum DamageType
-    Kinetic = 1
+    Piercing = 1
+    Slashing
+    Bludgeoning
     Explosive
     Energy
     Infernal

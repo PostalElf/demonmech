@@ -1,5 +1,5 @@
 [Lasergun]
-Slot: Hand
+Slot: Handweapon 1
 Component: Focus
 Component: Heat Exchanger
 Component: Gun Chasis
@@ -8,3 +8,10 @@ Accuracy: 60
 Range: 3
 DamageType: Energy
 DamageAmount: 1
+
+[Mechanoid Arm]
+Slot: Arm
+Component: Motor
+Component: Material - Plate
+Weight: 1
+Hands: 1

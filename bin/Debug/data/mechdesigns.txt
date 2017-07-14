@@ -1,1 +1,4 @@
 [Sloth]
+Slot: Chasis
+Slot: Arm
+Inventory: 2

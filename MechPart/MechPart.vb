@@ -6,7 +6,7 @@
     Public Agility As Integer
     Public Range As Integer
     Public ExtraHands As Integer
-    Public HandWeaponSpace As Integer
+    Public InventorySpace As Integer
     Public Accuracy As Integer
     Public Damage As New Dictionary(Of DamageType, Integer)
 
@@ -30,6 +30,7 @@
                 .Agility += Component.Agility
                 .Range += Component.Range
                 .ExtraHands += Component.ExtraHands
+                .InventorySpace += Component.InventorySpace
                 .Accuracy += Component.Accuracy
                 If Component.DamageType <> 0 Then .Damage(Component.DamageType) += Component.DamageAmount
             Next

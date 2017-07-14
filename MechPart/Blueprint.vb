@@ -1,9 +1,7 @@
 ﻿Public Class Blueprint
+    Inherits PartContainer
     Private Name As String
     Private MechPartSlot As String
-    Private ComponentsCompulsory As New List(Of String)
-    Private ComponentsFilled As New List(Of String)
-    Private Components As New List(Of Component)
     Private BlueprintModifiers As New Component                             'hidden component that holds the modifiers from the blueprint
 
     Public Shared Function Load(ByVal blueprintName As String) As Blueprint
@@ -33,7 +31,7 @@
     End Sub
 
     Public Function ConstructMechPart() As MechPart
-        If ComponentsCompulsory.Count > 0 Then Return Nothing
+        If PartsCompulsory.Count > 0 Then Return Nothing
         If BlueprintModifiers Is Nothing = False AndAlso BlueprintModifiers.IsNotEmpty = True Then Components.Add(BlueprintModifiers)
         Return MechPart.Construct(Name, MechPartSlot, Components)
     End Function

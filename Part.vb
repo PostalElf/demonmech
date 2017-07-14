@@ -3,12 +3,15 @@
 End Class
 
 Public MustInherit Class PartContainer
-    Private PartsCompulsory As New List(Of String)
-    Private PartsFilled As New List(Of String)
-    Private Parts As New List(Of Part)
-    Private PlanModifiers As Part
+    Protected PartsCompulsory As New List(Of String)
+    Protected PartsFilled As New List(Of String)
+    Protected Parts As New List(Of Part)
+    Protected PlanModifiers As Part
 
-    Public MustOverride Function ConstructBit() As Part
+    Public Function ConstructBit() As Part
+        If PartsCompulsory.Count > 0 Then Return Nothing
+        If PlanModifiers Is Nothing = False Then Parts.Add(PlanModifiers)
+    End Function
     Public Function AddPart(ByVal part As Part) As String
         Dim c As String = part.Category
         If PartsCompulsory.Contains(c) = False Then Return "Invalid part category"

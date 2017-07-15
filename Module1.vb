@@ -24,8 +24,16 @@
         sloth.EquipHandWeapon(lasergun)
 
         Dim battlefield As Battlefield = battlefield.Construct(sloth, 10, 10, New Camera(3, 3), BattlefieldTerrain.Wasteland)
-        battlefield.ConsoleWrite()
-        Console.ReadLine()
+        While True
+            battlefield.ConsoleWrite()
+            Select Case Console.ReadKey.Key
+                Case ConsoleKey.NumPad8 : battlefield.MoveCombatant(sloth, "N"c)
+                Case ConsoleKey.NumPad4 : battlefield.MoveCombatant(sloth, "W"c)
+                Case ConsoleKey.NumPad6 : battlefield.MoveCombatant(sloth, "E"c)
+                Case ConsoleKey.NumPad2 : battlefield.MoveCombatant(sloth, "S"c)
+            End Select
+            Console.Clear()
+        End While
     End Sub
 
 End Module

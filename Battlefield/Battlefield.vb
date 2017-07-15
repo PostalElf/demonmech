@@ -55,8 +55,51 @@
     Public Sub PlaceObject(ByVal x As Integer, ByVal y As Integer, ByRef battleObject As BattleObject)
         If x < 0 OrElse x > XRange OrElse y < 0 OrElse y > YRange Then Exit Sub
 
+        If Field(battleObject.X, battleObject.Y) Is Nothing = False Then
+            'existing object on field
+            'remove from original square first
+            Field(battleObject.X, battleObject.Y) = Nothing
+        End If
+
         battleObject.X = x
         battleObject.Y = y
         Field(x, y) = battleObject
     End Sub
+    Public Sub MoveCombatant(ByVal battleCombatant As BattleCombatant, ByVal direction As Char)
+        Dim newX As Integer = battleCombatant.X
+        Dim newY As Integer = battleCombatant.Y
+
+        Select Case Char.ToUpper(direction)
+            Case "N"c : newY -= 1
+            Case "S"c : newY += 1
+            Case "E"c : newX += 1
+            Case "W"c : newX -= 1
+        End Select
+
+        If CheckMove(newX, newY, battleCombatant) = False Then Exit Sub
+        PlaceObject(newX, newY, battleCombatant)
+    End Sub
+    Private Function CheckMove(ByVal x As Integer, ByVal y As Integer, ByVal battlecombatant As BattleCombatant) As Boolean
+        'check bounds
+        If x < 0 Then Return False
+        If x > XRange Then Return False
+        If y < 0 Then Return False
+        If y > YRange Then Return False
+
+        'check if square is filled
+        If Field(x, y) Is Nothing = False Then
+            If TypeOf (Field(x, y)) Is BattleObstacle Then
+                'square filled with obstacle
+                'return true if obstacle is crushable and combatant is crusher; else return false
+                Dim obstacle As BattleObstacle = CType(Field(x, y), BattleObstacle)
+                If obstacle.IsCrushable = True AndAlso battlecombatant.IsCrusher = True Then Return True Else Return False
+            Else
+                'square filled with something that cannot be crushed; return false
+                Return False
+            End If
+        Else
+            'square is empty
+            Return True
+        End If
+    End Function
 End Class

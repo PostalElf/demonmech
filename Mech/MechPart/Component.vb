@@ -7,6 +7,8 @@
     Public Range As Integer
     Public ExtraHands As Integer
     Public InventorySpace As Integer
+    Public AP As Integer
+    Public APPerSeal As Integer
     Public DamageAmount As Integer
     Public DamageType As DamageType
     Public ReadOnly Property IsNotEmpty As Boolean
@@ -50,6 +52,8 @@
             Case "Range" : Range = CInt(value)
             Case "Hands" : ExtraHands = CInt(value)
             Case "Inventory" : InventorySpace += CInt(value)
+            Case "AP" : AP += CInt(value)
+            Case "APPerSeal" : APPerSeal += CInt(value)
             Case "DamageAmount" : DamageAmount = CInt(value)
             Case "DamageType"
                 For Each dt In [Enum].GetValues(GetType(DamageType))
@@ -58,6 +62,6 @@
         End Select
     End Sub
     Public Overrides Function ToString() As String
-        Return Name
+        If Name = "" Then Return "-" Else Return Name
     End Function
 End Class

@@ -2,3 +2,5 @@
 Slot: Mech Chasis
 Slot: Arm
 Inventory: 2
+AP: 5
+APPerSeal: 1

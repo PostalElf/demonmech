@@ -7,6 +7,8 @@
     Public Range As Integer
     Public ExtraHands As Integer
     Public InventorySpace As Integer
+    Public AP As Integer
+    Public APPerSeal As Integer
     Public Accuracy As Integer
     Public Damage As New Dictionary(Of DamageType, Integer)
 

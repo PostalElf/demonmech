@@ -1,4 +1,5 @@
-﻿Public Module SquareBracketIO
+﻿<DebuggerStepThrough()>
+Public Module SquareBracketIO
     Public Function SquareBracketLoader(ByVal path As String, ByVal targetName As String) As Queue(Of String)
         Dim total As New Queue(Of String)
         Dim searchFound As Boolean = False

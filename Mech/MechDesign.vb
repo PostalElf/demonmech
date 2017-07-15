@@ -27,7 +27,7 @@
     Private Sub Construct(ByVal key As String, ByVal value As String)
         Select Case key
             Case "Slot" : MechSlotsCompulsory.Add(value)
-            Case "Inventory" : MechDesignModifiers.InventorySpace += CInt(value)
+            Case Else : MechDesignModifiers.Construct(key, value)
         End Select
     End Sub
     Public Function ConstructMech(ByVal mechName As String) As Mech

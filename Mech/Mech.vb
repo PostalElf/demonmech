@@ -4,6 +4,27 @@
     Private MechParts As New List(Of MechPart)
     Private MechDesignModifiers As Component
 
+    Protected Overrides ReadOnly Property ActionPointsMax As Integer
+        Get
+            Dim total As Integer = 0
+            For Each mp In MechParts
+                total += mp.AP
+            Next
+            total += MechDesignModifiers.AP
+            Return total
+        End Get
+    End Property
+    Private ReadOnly Property APPerSeal As Integer
+        Get
+            Dim total As Integer = 0
+            For Each mp In MechParts
+                total += mp.APPerSeal
+            Next
+            total += MechDesignModifiers.APPerSeal
+            Return total
+        End Get
+    End Property
+
     Private HandWeaponsInventory As New List(Of MechPart)
     Private HandWeaponsEquipped As New List(Of MechPart)
     Private ReadOnly Property InventorySpace As Integer
@@ -55,11 +76,12 @@
         End Get
     End Property
 
-    Public Shared Function Construct(ByVal mechDesignName As String, ByVal mechDesignModifiers As Component) As Mech
+    Public Shared Function Construct(ByVal mechDesignName As String, ByRef mechDesignModifiers As Component) As Mech
         Dim mech As New Mech
         With mech
             .DesignName = mechDesignName
             .MechDesignModifiers = mechDesignModifiers
+            ._IsCrusher = True
         End With
         Return mech
     End Function

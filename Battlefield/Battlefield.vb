@@ -65,21 +65,7 @@
         battleObject.Y = y
         Field(x, y) = battleObject
     End Sub
-    Public Sub MoveCombatant(ByVal battleCombatant As BattleCombatant, ByVal direction As Char)
-        Dim newX As Integer = battleCombatant.X
-        Dim newY As Integer = battleCombatant.Y
-
-        Select Case Char.ToUpper(direction)
-            Case "N"c : newY -= 1
-            Case "S"c : newY += 1
-            Case "E"c : newX += 1
-            Case "W"c : newX -= 1
-        End Select
-
-        If CheckMove(newX, newY, battleCombatant) = False Then Exit Sub
-        PlaceObject(newX, newY, battleCombatant)
-    End Sub
-    Private Function CheckMove(ByVal x As Integer, ByVal y As Integer, ByVal battlecombatant As BattleCombatant) As Boolean
+    Public Function CheckMove(ByVal x As Integer, ByVal y As Integer, ByVal battlecombatant As BattleCombatant) As Boolean
         'check bounds
         If x < 0 Then Return False
         If x > XRange Then Return False

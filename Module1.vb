@@ -21,9 +21,10 @@
         slothDesign.AddMechPart(chasis)
         slothDesign.AddMechPart(lasergun)
         Dim sloth As Mech = slothDesign.ConstructMech("Sloth v1")
+        sloth.IsCrusher = True
         sloth.EquipHandWeapon(lasergun)
 
-        Dim battlefield As Battlefield = battlefield.Construct(sloth, 10, 10, New Camera(3, 3), BattlefieldTerrain.Wasteland)
+        Dim battlefield As Battlefield = battlefield.Construct(sloth, 10, 10, New Camera(2, 2), BattlefieldTerrain.Wasteland)
         While True
             battlefield.ConsoleWrite()
             Select Case Console.ReadKey.Key

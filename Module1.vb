@@ -22,19 +22,28 @@
         slothDesign.AddMechPart(lasergun)
         Dim sloth As Mech = slothDesign.ConstructMech("Sloth v1")
         sloth.IsCrusher = True
+        sloth.ActionPointsMax = 5
         sloth.EquipHandWeapon(lasergun)
 
         Dim battlefield As Battlefield = battlefield.Construct(sloth, 10, 10, New Camera(2, 2), BattlefieldTerrain.Wasteland)
+        sloth.EndTurn()
         While True
             battlefield.ConsoleWrite()
+            sloth.ConsoleWriteReport()
             Select Case Console.ReadKey.Key
-                Case ConsoleKey.NumPad8 : battlefield.MoveCombatant(sloth, "N"c)
-                Case ConsoleKey.NumPad4 : battlefield.MoveCombatant(sloth, "W"c)
-                Case ConsoleKey.NumPad6 : battlefield.MoveCombatant(sloth, "E"c)
-                Case ConsoleKey.NumPad2 : battlefield.MoveCombatant(sloth, "S"c)
+                Case ConsoleKey.NumPad8 : MoveCombatant(battlefield, sloth, "N"c)
+                Case ConsoleKey.NumPad4 : MoveCombatant(battlefield, sloth, "W"c)
+                Case ConsoleKey.NumPad6 : MoveCombatant(battlefield, sloth, "E"c)
+                Case ConsoleKey.NumPad2 : MoveCombatant(battlefield, sloth, "S"c)
+                Case ConsoleKey.Enter : sloth.EndTurn()
             End Select
             Console.Clear()
         End While
+    End Sub
+    Private Sub MoveCombatant(ByVal battlefield As Battlefield, ByVal mech As Mech, ByVal direction As Char)
+        If mech.ActionPoints < 1 Then Exit Sub
+        mech.ActionPoints -= 1
+        battlefield.MoveCombatant(mech, direction)
     End Sub
 
 End Module

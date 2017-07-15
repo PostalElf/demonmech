@@ -102,4 +102,7 @@
             Return True
         End If
     End Function
+    Public Sub EndPlayerTurn()
+        Mech.EndTurn()
+    End Sub
 End Class

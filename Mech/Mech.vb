@@ -100,4 +100,11 @@
         HandWeaponsEquipped.Remove(mechpart)
         Return Nothing
     End Function
+    Public Sub EndTurn()
+        ActionPoints = ActionPointsMax
+    End Sub
+
+    Public Sub ConsoleWriteReport()
+        Console.WriteLine("  " & Name & " - " & ActionPoints.ToString("00") & " AP")
+    End Sub
 End Class

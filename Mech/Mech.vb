@@ -1,5 +1,5 @@
 ﻿Public Class Mech
-    Public Name As String
+    Inherits BattleCombatant
     Private DesignName As String
     Private MechParts As New List(Of MechPart)
     Private MechDesignModifiers As Component
@@ -27,7 +27,7 @@
     End Property
     Private ReadOnly Property InventorySpaceFree As Integer
         Get
-            Return InventorySpace - inventoryspaceUsed
+            Return InventorySpace - InventorySpaceUsed
         End Get
     End Property
     Private ReadOnly Property Hands As Integer

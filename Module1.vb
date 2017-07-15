@@ -22,6 +22,10 @@
         slothDesign.AddMechPart(lasergun)
         Dim sloth As Mech = slothDesign.ConstructMech("Sloth v1")
         sloth.EquipHandWeapon(lasergun)
+
+        Dim battlefield As Battlefield = battlefield.Construct(sloth, 10, 10, New Camera(3, 3), BattlefieldTerrain.Wasteland)
+        battlefield.ConsoleWrite()
+        Console.ReadLine()
     End Sub
 
 End Module

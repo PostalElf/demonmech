@@ -69,7 +69,15 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MechPart\MechPart.vb" />
+    <Compile Include="Battlefield\BattleCombatant.vb" />
+    <Compile Include="Battlefield\Battlefield.vb" />
+    <Compile Include="Battlefield\BattlefieldTerrain.vb" />
+    <Compile Include="Battlefield\BattleObject.vb" />
+    <Compile Include="Battlefield\BattleObstacleCover.vb" />
+    <Compile Include="Battlefield\Camera.vb" />
+    <Compile Include="Battlefield\BattleObstacle.vb" />
+    <Compile Include="Dev\Common.vb" />
+    <Compile Include="Mech\MechPart\MechPart.vb" />
     <Compile Include="Mech\Mech.vb" />
     <Compile Include="Mech\MechDesign.vb" />
     <Compile Include="Module1.vb" />
@@ -88,9 +96,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="MechPart\Blueprint.vb" />
-    <Compile Include="MechPart\Component.vb" />
-    <Compile Include="MechPart\DamageType.vb" />
+    <Compile Include="Mech\MechPart\Blueprint.vb" />
+    <Compile Include="Mech\MechPart\Component.vb" />
+    <Compile Include="Mech\MechPart\DamageType.vb" />
     <Compile Include="Dev\SquareBracketIO.vb" />
   </ItemGroup>
   <ItemGroup>

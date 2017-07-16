@@ -3,52 +3,24 @@
     Private DesignName As String
     Private MechParts As New List(Of MechPart)
     Private MechDesignModifiers As Component
-
-    Protected Overrides ReadOnly Property ActionPointsMax As Integer
+    Private ReadOnly Property Weight As Integer
         Get
             Dim total As Integer = 0
             For Each mp In MechParts
-                total += mp.AP
+                total += mp.Weight
             Next
-            total += MechDesignModifiers.AP
+            total += MechDesignModifiers.Weight
             Return total
         End Get
     End Property
-    Private ReadOnly Property APPerSeal As Integer
+    Private ReadOnly Property Agility As Integer
         Get
             Dim total As Integer = 0
             For Each mp In MechParts
-                total += mp.APPerSeal
+                total += mp.Agility
             Next
-            total += MechDesignModifiers.APPerSeal
+            total += MechDesignModifiers.Agility
             Return total
-        End Get
-    End Property
-
-    Private HandWeaponsInventory As New List(Of MechPart)
-    Private HandWeaponsEquipped As New List(Of MechPart)
-    Private ReadOnly Property InventorySpace As Integer
-        Get
-            Dim total As Integer = 0
-            For Each mp In MechParts
-                total += mp.InventorySpace
-            Next
-            total += MechDesignModifiers.InventorySpace
-            Return total
-        End Get
-    End Property
-    Private ReadOnly Property InventorySpaceUsed As Integer
-        Get
-            Dim total As Integer = 0
-            For Each hw In HandWeaponsInventory
-                total += hw.HandSpace
-            Next
-            Return total
-        End Get
-    End Property
-    Private ReadOnly Property InventorySpaceFree As Integer
-        Get
-            Return InventorySpace - InventorySpaceUsed
         End Get
     End Property
     Private ReadOnly Property Hands As Integer
@@ -75,6 +47,53 @@
             Return Hands - HandsUsed
         End Get
     End Property
+    Private ReadOnly Property InventorySpace As Integer
+        Get
+            Dim total As Integer = 0
+            For Each mp In MechParts
+                total += mp.InventorySpace
+            Next
+            total += MechDesignModifiers.InventorySpace
+            Return total
+        End Get
+    End Property
+    Private ReadOnly Property InventorySpaceUsed As Integer
+        Get
+            Dim total As Integer = 0
+            For Each hw In HandWeaponsInventory
+                total += hw.HandSpace
+            Next
+            Return total
+        End Get
+    End Property
+    Private ReadOnly Property InventorySpaceFree As Integer
+        Get
+            Return InventorySpace - InventorySpaceUsed
+        End Get
+    End Property
+    Protected Overrides ReadOnly Property ActionPointsMax As Integer
+        Get
+            Dim total As Integer = 0
+            For Each mp In MechParts
+                total += mp.AP
+            Next
+            total += MechDesignModifiers.AP
+            Return total
+        End Get
+    End Property
+    Private ReadOnly Property APPerSeal As Integer
+        Get
+            Dim total As Integer = 0
+            For Each mp In MechParts
+                total += mp.APPerSeal
+            Next
+            total += MechDesignModifiers.APPerSeal
+            Return total
+        End Get
+    End Property
+
+    Private HandWeaponsInventory As New List(Of MechPart)
+    Private HandWeaponsEquipped As New List(Of MechPart)
 
     Public Shared Function Construct(ByVal mechDesignName As String, ByRef mechDesignModifiers As Component) As Mech
         Dim mech As New Mech
@@ -128,5 +147,15 @@
 
     Public Sub ConsoleWriteReport()
         Console.WriteLine("  " & Name & " - " & ActionPoints.ToString("00") & " AP")
+    End Sub
+    Public Sub ConsoleWriteReportExamine()
+        Console.WriteLine()
+        Console.WriteLine(Name & " [" & DesignName & "]")
+        Console.WriteLine("  WGT  : " & Weight)
+        Console.WriteLine("  AGI  : " & Agility)
+        Console.WriteLine("  AP   : " & ActionPoints & "/" & ActionPointsMax)
+        Console.WriteLine("  HAND : " & Hands)
+        Console.WriteLine("  INV  : " & InventorySpaceUsed & "/" & InventorySpace)
+        Console.ReadKey()
     End Sub
 End Class

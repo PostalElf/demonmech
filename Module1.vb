@@ -23,7 +23,7 @@
         Dim sloth As Mech = slothDesign.ConstructMech("Sloth v1")
         sloth.EquipHandWeapon(lasergun)
 
-        Dim battlefield As Battlefield = battlefield.Construct(sloth, 15, 15, New Camera(2, 2), BattlefieldTerrain.Wasteland)
+        Dim battlefield As Battlefield = battlefield.Construct(sloth, 15, 15, New Camera(5, 5), BattlefieldTerrain.Wasteland)
         sloth.EndTurn()
         While True
             battlefield.ConsoleWrite()
@@ -33,6 +33,7 @@
                 Case ConsoleKey.NumPad4 : sloth.MoveCombatant(battlefield, "W"c)
                 Case ConsoleKey.NumPad6 : sloth.MoveCombatant(battlefield, "E"c)
                 Case ConsoleKey.NumPad2 : sloth.MoveCombatant(battlefield, "S"c)
+                Case ConsoleKey.X : sloth.ConsoleWriteReportExamine()
                 Case ConsoleKey.Enter : sloth.EndTurn()
             End Select
             Console.Clear()

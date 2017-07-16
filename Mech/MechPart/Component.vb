@@ -3,12 +3,13 @@
     Public Category As String
     Public Weight As Integer
     Public Agility As Integer
-    Public Accuracy As Integer
-    Public Range As Integer
     Public ExtraHands As Integer
     Public InventorySpace As Integer
     Public AP As Integer
     Public APPerSeal As Integer
+
+    Public Accuracy As Integer
+    Public Range As Integer
     Public DamageAmount As Integer
     Public DamageType As DamageType
     Public ReadOnly Property IsNotEmpty As Boolean

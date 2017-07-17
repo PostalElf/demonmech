@@ -1,6 +1,7 @@
 ﻿Public Class Mech
     Inherits BattleCombatant
     Private DesignName As String
+    Private CombatLimbs As New List(Of CombatLimb)
     Private MechParts As New List(Of MechPart)
     Private MechDesignModifiers As Component
     Private ReadOnly Property Weight As Integer
@@ -112,6 +113,7 @@
         If mechpart.Slot = "Handweapon" Then
             If InventorySpaceFree - mechpart.HandSpace < 0 Then Return "Insufficient inventory space"
             HandWeaponsInventory.Add(mechpart)
+            CombatLimbs.Add(CombatLimb.construct(mechpart))
             Return Nothing
         Else
             MechParts.Add(mechpart)
@@ -176,6 +178,12 @@
         For Each hwp In HandWeaponsInventory
             Console.WriteLine(counter & ") " & hwp.Report)
             counter += 1
+        Next
+    End Sub
+    Public Sub ConsoleWriteCombatLimbs()
+        Dim counter As Integer = 1
+        For Each cl In CombatLimbs
+            Console.WriteLine(counter & ") " & cl.report)
         Next
     End Sub
 End Class

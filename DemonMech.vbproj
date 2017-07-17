@@ -76,6 +76,7 @@
     <Compile Include="Battlefield\BattleObstacleCover.vb" />
     <Compile Include="Battlefield\Camera.vb" />
     <Compile Include="Battlefield\BattleObstacle.vb" />
+    <Compile Include="Battlefield\CombatLimb.vb" />
     <Compile Include="Dev\Common.vb" />
     <Compile Include="Mech\MechPart\MechPart.vb" />
     <Compile Include="Mech\Mech.vb" />

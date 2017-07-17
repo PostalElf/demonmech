@@ -16,7 +16,7 @@
         Dim MechPart As New MechPart
         With MechPart
             .BlueprintName = blueprintName
-            .Name = mechpartName
+            .Name = mechPartName
 
             'check for handedness in mechPartSlot
             If mechPartSlot.StartsWith("Handweapon") Then
@@ -31,6 +31,8 @@
             For Each Component In Components
                 .Weight += Component.Weight
                 .Agility += Component.Agility
+                .Dodge += Component.Dodge
+                .Health += Component.Health
                 .ExtraHands += Component.ExtraHands
                 .InventorySpace += Component.InventorySpace
                 .AP += Component.AP

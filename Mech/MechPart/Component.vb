@@ -1,12 +1,15 @@
 ﻿Public Class Component
     Public Name As String
-    Public Slot As String                   'category for components, slot for mechParts
-    Public Weight As Integer
-    Public Agility As Integer
-    Public ExtraHands As Integer            'how many hands it adds to the mech
-    Public InventorySpace As Integer        'how much inventory space for handweapons it adds
-    Public AP As Integer                    'action points
-    Public APPerSeal As Integer             'how many AP the mech gains per seal undone
+    Public Slot As String                       'category for components, slot for mechParts
+    Public Weight As Integer                    'impact on mech agility
+    Public Agility As Integer                   'impact on mech agility
+    Public Dodge As Integer                     'accuracy penalty to hits on the mechpart'
+    Public Defences As New List(Of DamageType)  'damageTypes it takes half damage from
+    Public Health As Integer                    'how much damage the mechpart can take
+    Public ExtraHands As Integer                'how many hands it adds to the mech
+    Public InventorySpace As Integer            'how much inventory space for handweapons it adds
+    Public AP As Integer                        'action points
+    Public APPerSeal As Integer                 'how many AP the mech gains per seal undone
 
     Public Accuracy As Integer              'base percentile accuracy
     Public Aim As Integer                   'how much accuracy weapon gains per additional AP spent aiming
@@ -51,6 +54,9 @@
             Case "Category" : Slot = value
             Case "Weight" : Weight = CInt(value)
             Case "Agility" : Agility = CInt(value)
+            Case "Dodge" : Dodge = CInt(value)
+            Case "Defence" : Defences.Add(String2DamageType(value))
+            Case "Health" : Health = CInt(value)
             Case "Hands" : ExtraHands = CInt(value)
             Case "Inventory" : InventorySpace += CInt(value)
             Case "AP" : AP += CInt(value)
@@ -69,5 +75,12 @@
     End Sub
     Public Overrides Function ToString() As String
         If Name = "" Then Return "-" Else Return Name
+    End Function
+
+    Private Shared Function String2DamageType(ByVal value As String) As DamageType
+        For Each dt In [Enum].GetValues(GetType(DamageType))
+            If dt.ToString = value Then Return dt
+        Next
+        Return Nothing
     End Function
 End Class

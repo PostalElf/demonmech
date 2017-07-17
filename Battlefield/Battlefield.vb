@@ -27,7 +27,7 @@
             .PlaceObject(mechX, mechY, .Mech)
 
             'place obstacle 2 in front of mech
-            Dim obstacle As BattleObstacle = BattleObstacle.Construct(terrain)
+            Dim obstacle As BattleObstacle = BattleObstacle.Construct("Tank Trap")
             .PlaceObject(mechX, mechY - 2, obstacle)
         End With
         Return bf

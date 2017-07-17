@@ -129,16 +129,22 @@
             Return Nothing
         End If
     End Function
+    Public Function EquipHandWeapon(ByVal index As Integer) As String
+        If index > HandWeaponsInventory.Count - 1 OrElse index < 0 Then Return "Invalid handweaponinventory index"
+        Return EquipHandWeapon(HandWeaponsInventory(0))
+    End Function
     Public Function EquipHandWeapon(ByVal mechpart As MechPart) As String
         If HandWeaponsInventory.Contains(mechpart) = False Then Return "Weapon not in inventory"
         If HandsFree < mechpart.HandSpace Then Return "Insufficient hands"
         HandWeaponsEquipped.Add(mechpart)
+        HandWeaponsInventory.Remove(mechpart)
         Return Nothing
     End Function
     Public Function UnequipHandWeapon(ByVal mechpart As MechPart) As String
         If HandWeaponsInventory.Contains(mechpart) = False Then Return "Weapon not in inventory"
         If HandWeaponsEquipped.Contains(mechpart) = False Then Return "Weapon not equipped"
         HandWeaponsEquipped.Remove(mechpart)
+        HandWeaponsInventory.Add(mechpart)
         Return Nothing
     End Function
     Public Sub EndTurn()
@@ -151,11 +157,21 @@
     Public Sub ConsoleWriteReportExamine()
         Console.WriteLine()
         Console.WriteLine(Name & " [" & DesignName & "]")
-        Console.WriteLine("  WGT  : " & Weight)
-        Console.WriteLine("  AGI  : " & Agility)
-        Console.WriteLine("  AP   : " & ActionPoints & "/" & ActionPointsMax)
-        Console.WriteLine("  HAND : " & Hands)
-        Console.WriteLine("  INV  : " & InventorySpaceUsed & "/" & InventorySpace)
+        Console.WriteLine(" └ WGT  : " & Weight)
+        Console.WriteLine(" └ AGI  : " & Agility)
+        Console.WriteLine(" └ AP   : " & ActionPoints & "/" & ActionPointsMax)
+        Console.WriteLine(" └ HAND : " & Hands)
+        Console.WriteLine(" └ INV  : " & InventorySpaceUsed & "/" & InventorySpace)
+        For Each hw In HandWeaponsEquipped
+            Console.WriteLine("    └ " & hw.Report)
+        Next
         Console.ReadKey()
+    End Sub
+    Public Sub ConsoleWriteHandWeaponsInventory()
+        Dim counter As Integer = 1
+        For Each hwp In HandWeaponsInventory
+            Console.WriteLine(counter & ") " & hwp.Name)
+            counter += 1
+        Next
     End Sub
 End Class

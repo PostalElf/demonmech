@@ -50,4 +50,7 @@
     Public Overrides Function ToString() As String
         Return Name
     End Function
+    Public Function Report() As String
+        Return Name & " [" & Slot & "]: "
+    End Function
 End Class

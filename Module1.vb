@@ -20,23 +20,37 @@
         slothDesign.AddMechPart(mechArm)
         slothDesign.AddMechPart(chasis)
         slothDesign.AddMechPart(lasergun)
-        Dim sloth As Mech = slothDesign.ConstructMech("Sloth v1")
-        sloth.EquipHandWeapon(lasergun)
+        Dim mech As Mech = slothDesign.ConstructMech("Sloth v1")
 
-        Dim battlefield As Battlefield = battlefield.Construct(sloth, 15, 15, New Camera(5, 5), BattlefieldTerrain.Wasteland)
-        sloth.EndTurn()
+        Dim battlefield As Battlefield = battlefield.Construct(mech, 15, 15, New Camera(5, 5), BattlefieldTerrain.Wasteland)
+        mech.EndTurn()
         While True
             battlefield.ConsoleWrite()
-            sloth.ConsoleWriteReport()
+            mech.ConsoleWriteReport()
             Select Case Console.ReadKey.Key
-                Case ConsoleKey.NumPad8 : sloth.MoveCombatant(battlefield, "N"c)
-                Case ConsoleKey.NumPad4 : sloth.MoveCombatant(battlefield, "W"c)
-                Case ConsoleKey.NumPad6 : sloth.MoveCombatant(battlefield, "E"c)
-                Case ConsoleKey.NumPad2 : sloth.MoveCombatant(battlefield, "S"c)
-                Case ConsoleKey.X : sloth.ConsoleWriteReportExamine()
-                Case ConsoleKey.Enter : sloth.EndTurn()
+                Case ConsoleKey.NumPad8 : mech.MoveCombatant(battlefield, "N"c)
+                Case ConsoleKey.NumPad4 : mech.MoveCombatant(battlefield, "W"c)
+                Case ConsoleKey.NumPad6 : mech.MoveCombatant(battlefield, "E"c)
+                Case ConsoleKey.NumPad2 : mech.MoveCombatant(battlefield, "S"c)
+                Case ConsoleKey.X : mech.ConsoleWriteReportExamine()
+                Case ConsoleKey.E : EquipWeapon(mech)
+                Case ConsoleKey.Enter : mech.EndTurn()
             End Select
             Console.Clear()
         End While
+    End Sub
+    Private Sub EquipWeapon(ByVal mech As Mech)
+        Dim selection As Integer = 0
+        While True
+            Console.WriteLine()
+            mech.ConsoleWriteHandWeaponsInventory()
+            Console.Write("Select weapon to equip: ")
+            Dim input As String = Console.ReadLine
+            If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
+        End While
+
+        selection -= 1                          'indexes start at 0, not 1
+        If selection = -1 Then Exit Sub
+        mech.EquipHandWeapon(selection)
     End Sub
 End Module

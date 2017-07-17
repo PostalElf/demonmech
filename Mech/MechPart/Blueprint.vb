@@ -36,7 +36,7 @@
     End Function
 
     Public Function AddComponent(ByVal component As Component) As String
-        Dim c As String = component.Category
+        Dim c As String = component.Slot
         If ComponentsCompulsory.Contains(c) Then
             ComponentsCompulsory.Remove(c)
             ComponentsFilled.Add(c)
@@ -48,7 +48,7 @@
         Return Nothing
     End Function
     Public Function RemoveComponent(ByVal component As Component) As String
-        Dim c As String = component.Category
+        Dim c As String = component.Slot
         If Components.Contains(component) = False Then Return "Component not in list."
 
         Components.Remove(component)

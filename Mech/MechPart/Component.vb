@@ -1,6 +1,6 @@
 ﻿Public Class Component
     Public Name As String
-    Public Category As String
+    Public Slot As String
     Public Weight As Integer
     Public Agility As Integer
     Public ExtraHands As Integer
@@ -46,7 +46,7 @@
     End Function
     Public Sub Construct(ByVal key As String, ByVal value As String)
         Select Case key
-            Case "Category" : Category = value
+            Case "Category" : Slot = value
             Case "Weight" : Weight = CInt(value)
             Case "Agility" : Agility = CInt(value)
             Case "Accuracy" : Accuracy = CInt(value)

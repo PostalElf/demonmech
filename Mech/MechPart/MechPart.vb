@@ -1,18 +1,9 @@
 ﻿Public Class MechPart
-    Public Name As String
-    Public Slot As String
+    Inherits Component
     Public HandSpace As Integer
-    Public Weight As Integer
-    Public Agility As Integer
-    Public Range As Integer
-    Public ExtraHands As Integer
-    Public InventorySpace As Integer
-    Public AP As Integer
-    Public APPerSeal As Integer
-    Public Accuracy As Integer
     Public Damage As New Dictionary(Of DamageType, Integer)
 
-    Public Shared Function Construct(ByVal blueprintName As String, ByVal mechPartSlot As String, ByVal Components As List(Of Component)) As MechPart
+    Public Shared Shadows Function Construct(ByVal blueprintName As String, ByVal mechPartSlot As String, ByVal Components As List(Of Component)) As MechPart
         Dim MechPart As New MechPart
         With MechPart
             .Name = blueprintName

@@ -1,15 +1,17 @@
 ﻿Public Class Component
     Public Name As String
-    Public Slot As String
+    Public Slot As String                   'category for components, slot for mechParts
     Public Weight As Integer
     Public Agility As Integer
-    Public ExtraHands As Integer
-    Public InventorySpace As Integer
-    Public AP As Integer
-    Public APPerSeal As Integer
+    Public ExtraHands As Integer            'how many hands it adds to the mech
+    Public InventorySpace As Integer        'how much inventory space for handweapons it adds
+    Public AP As Integer                    'action points
+    Public APPerSeal As Integer             'how many AP the mech gains per seal undone
 
-    Public Accuracy As Integer
-    Public Range As Integer
+    Public Accuracy As Integer              'base percentile accuracy
+    Public Aim As Integer                   'how much accuracy weapon gains per additional AP spent aiming
+    Public AimAP As Integer                 'how much AP can be spent aiming
+    Public Range As Integer                 'how many squares away the weapon can hit
     Public DamageAmount As Integer
     Public DamageType As DamageType
     Public ReadOnly Property IsNotEmpty As Boolean
@@ -49,12 +51,15 @@
             Case "Category" : Slot = value
             Case "Weight" : Weight = CInt(value)
             Case "Agility" : Agility = CInt(value)
-            Case "Accuracy" : Accuracy = CInt(value)
-            Case "Range" : Range = CInt(value)
             Case "Hands" : ExtraHands = CInt(value)
             Case "Inventory" : InventorySpace += CInt(value)
             Case "AP" : AP += CInt(value)
             Case "APPerSeal" : APPerSeal += CInt(value)
+
+            Case "Accuracy" : Accuracy = CInt(value)
+            Case "Aim" : Aim = CInt(value)
+            Case "AimAP" : AimAP = CInt(value)
+            Case "Range" : Range = CInt(value)
             Case "DamageAmount" : DamageAmount = CInt(value)
             Case "DamageType"
                 For Each dt In [Enum].GetValues(GetType(DamageType))

@@ -5,16 +5,16 @@
         lasergunBlueprint.AddComponent(Component.Load("Hellstone Crystal"))
         lasergunBlueprint.AddComponent(Component.Load("Hellstone Circuit"))
         lasergunBlueprint.AddComponent(Component.Load("Revolver Chasis"))
-        Dim lasergun As MechPart = lasergunBlueprint.ConstructMechPart
+        Dim lasergun As MechPart = lasergunBlueprint.ConstructMechPart("Laser Revolver")
 
         Dim mechArmBlueprint As Blueprint = Blueprint.Load("Mechanoid Arm")
         mechArmBlueprint.AddComponent(Component.Load("EM Motor"))
         mechArmBlueprint.AddComponent(Component.Load("Nanosteel Plate"))
-        Dim mechArm As MechPart = mechArmBlueprint.ConstructMechPart
+        Dim mechArm As MechPart = mechArmBlueprint.ConstructMechPart("Mech Arm")
 
         Dim chasisBlueprint As Blueprint = Blueprint.Load("Nanocarbon Mech Chasis")
         chasisBlueprint.AddComponent(Component.Load("Nanosteel Plate"))
-        Dim chasis As MechPart = chasisBlueprint.ConstructMechPart
+        Dim chasis As MechPart = chasisBlueprint.ConstructMechPart("Chasis")
 
         Dim slothDesign As MechDesign = MechDesign.Load("Sloth")
         slothDesign.AddMechPart(mechArm)

@@ -165,12 +165,16 @@
         For Each hw In HandWeaponsEquipped
             Console.WriteLine("    └ " & hw.Report)
         Next
+        Console.WriteLine(" └ MECH PARTS:")
+        For Each mp In MechParts
+            Console.WriteLine("    └ " & mp.Report)
+        Next
         Console.ReadKey()
     End Sub
     Public Sub ConsoleWriteHandWeaponsInventory()
         Dim counter As Integer = 1
         For Each hwp In HandWeaponsInventory
-            Console.WriteLine(counter & ") " & hwp.Name)
+            Console.WriteLine(counter & ") " & hwp.Report)
             counter += 1
         Next
     End Sub

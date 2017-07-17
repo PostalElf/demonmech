@@ -1,12 +1,22 @@
 ﻿Public Class MechPart
     Inherits Component
+    Private BlueprintName As String
     Public HandSpace As Integer
+    Private ReadOnly Property IsWeapon As Boolean
+        Get
+            For Each key In Damage.Keys
+                If Damage(key) > 0 Then Return True
+            Next
+            Return False
+        End Get
+    End Property
     Public Damage As New Dictionary(Of DamageType, Integer)
 
-    Public Shared Shadows Function Construct(ByVal blueprintName As String, ByVal mechPartSlot As String, ByVal Components As List(Of Component)) As MechPart
+    Public Shared Shadows Function Construct(ByVal blueprintName As String, ByVal mechPartName As String, ByVal mechPartSlot As String, ByVal Components As List(Of Component)) As MechPart
         Dim MechPart As New MechPart
         With MechPart
-            .Name = blueprintName
+            .BlueprintName = blueprintName
+            .Name = mechpartName
 
             'check for handedness in mechPartSlot
             If mechPartSlot.StartsWith("Handweapon") Then
@@ -21,10 +31,15 @@
             For Each Component In Components
                 .Weight += Component.Weight
                 .Agility += Component.Agility
-                .Range += Component.Range
                 .ExtraHands += Component.ExtraHands
                 .InventorySpace += Component.InventorySpace
+                .AP += Component.AP
+                .APPerSeal += Component.APPerSeal
+
                 .Accuracy += Component.Accuracy
+                .Aim += Component.Aim
+                .AimAP += Component.AimAP
+                .Range += Component.Range
                 If Component.DamageType <> 0 Then .Damage(Component.DamageType) += Component.DamageAmount
             Next
 
@@ -42,6 +57,27 @@
         Return Name
     End Function
     Public Function Report() As String
-        Return Name & " [" & Slot & "]: "
+        Dim total As String = Name & " [" & Slot & "]"
+        If IsWeapon = True Then
+            total &= ": " & Accuracy & "%"
+            If AimAP > 0 Then total &= " (+" & Aim & " x" & AimAP & ")"
+            total &= " - "
+            For Each key In Damage.Keys
+                If Damage(key) = 0 Then Continue For
+                total &= Damage(key) & Shortener(key.ToString).ToLower
+            Next
+        End If
+        Return total
+    End Function
+    Private Function Shortener(ByVal value As String) As String
+        Select Case value
+            Case "Piercing" : Return "P"
+            Case "Slashing" : Return "S"
+            Case "Bludgeoning" : Return "B"
+            Case "Explosive" : Return "X"
+            Case "Energy" : Return "N"
+            Case "Infernal" : Return "I"
+            Case Else : Return Nothing
+        End Select
     End Function
 End Class

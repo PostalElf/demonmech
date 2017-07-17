@@ -1,5 +1,5 @@
 ﻿Public Class Blueprint
-    Private Name As String
+    Private BlueprintName As String
     Private MechPartSlot As String
     Private ComponentsCompulsory As New List(Of String)
     Private ComponentsFilled As New List(Of String)
@@ -12,7 +12,7 @@
 
         Dim blueprint As New Blueprint
         With blueprint
-            .Name = q.Dequeue()
+            .BlueprintName = q.Dequeue()
             While q.Count > 0
                 Dim line As String() = q.Dequeue.Split(":")
                 Dim key As String = line(0).Trim
@@ -29,10 +29,10 @@
             Case Else : BlueprintModifiers.Construct(key, value)
         End Select
     End Sub
-    Public Function ConstructMechPart() As MechPart
+    Public Function ConstructMechPart(ByVal mechPartName As String) As MechPart
         If ComponentsCompulsory.Count > 0 Then Return Nothing
         If BlueprintModifiers Is Nothing = False AndAlso BlueprintModifiers.IsNotEmpty = True Then Components.Add(BlueprintModifiers)
-        Return MechPart.Construct(Name, MechPartSlot, Components)
+        Return MechPart.Construct(BlueprintName, mechPartName, MechPartSlot, Components)
     End Function
 
     Public Function AddComponent(ByVal component As Component) As String

@@ -26,6 +26,7 @@
         mech.EndTurn()
         While True
             battlefield.ConsoleWrite()
+            Console.ForegroundColor = ConsoleColor.White
             mech.ConsoleWriteReport()
             Select Case Console.ReadKey.Key
                 Case ConsoleKey.NumPad8 : mech.MoveCombatant(battlefield, "N"c)

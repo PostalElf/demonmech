@@ -103,13 +103,16 @@
             For x = Mech.X - Camera.XRange To Mech.X + Camera.XRange
                 If (x < 0 OrElse x > XRange) OrElse (y < 0 OrElse y > YRange) Then
                     'out of bounds, display asterix
+                    Console.ForegroundColor = ConsoleColor.DarkGray
                     Console.Write("*")
                 Else
                     If Field(x, y) Is Nothing Then
                         'empty field, display dot
+                        Console.ForegroundColor = ConsoleColor.DarkGray
                         Console.Write(".")
                     Else
                         'filled field, display character
+                        Console.ForegroundColor = Field(x, y).CColour
                         Console.Write(Field(x, y).C)
                     End If
                 End If

@@ -1,6 +1,7 @@
 ﻿Public Class BattleObstacle
     Inherits BattleObject
     Public Shadows Property C As Char
+    Public Shadows Property CColour As ConsoleColor
     Public Cover As BattleObstacleCover
     Public XWidth As Integer
     Public YWidth As Integer
@@ -13,18 +14,21 @@
             Select Case obstacleName
                 Case "Tank Trap"
                     .C = "^"
+                    .CColour = ConsoleColor.Gray
                     .IsCrushable = True
                     .Cover = BattleObstacleCover.Low
                     .XWidth = 1
                     .YWidth = 1
                 Case "Prefab House"
                     .C = "H"
+                    .CColour = ConsoleColor.Gray
                     .IsCrushable = True
                     .Cover = BattleObstacleCover.Medium
                     .XWidth = 2
                     .YWidth = 2
                 Case "Factory"
                     .C = "F"
+                    .CColour = ConsoleColor.Gray
                     .IsCrushable = False
                     .Cover = BattleObstacleCover.Full
                     .XWidth = 4
@@ -39,6 +43,7 @@
         With total
             .Name = obstacle.Name
             .C = obstacle.C
+            .CColour = obstacle.CColour
             .IsCrushable = obstacle.IsCrushable
             .Cover = obstacle.Cover
         End With

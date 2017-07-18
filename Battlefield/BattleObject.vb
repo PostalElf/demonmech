@@ -11,4 +11,13 @@
             End Select
         End Get
     End Property
+    Public ReadOnly Property CColour As ConsoleColor
+        Get
+            Select Case Me.GetType
+                Case GetType(Mech) : Return ConsoleColor.White
+                Case GetType(BattleObstacle) : Return CType(Me, BattleObstacle).CColour
+                Case Else : Return ConsoleColor.Gray
+            End Select
+        End Get
+    End Property
 End Class

@@ -8,4 +8,9 @@
         Next
         Return total
     End Function
+    Public Function GetRandom(Of T)(ByRef list As List(Of T)) As T
+        Dim roll As Integer = Rng.Next(list.Count)
+        GetRandom = list(0)
+        list.RemoveAt(0)
+    End Function
 End Module

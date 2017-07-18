@@ -50,7 +50,7 @@
 
             'check if obstacle placement is ok
             Dim failureCount As Integer = 5                     'number of times the system should try to place the obstacle before giving up
-            While CheckPlacement(targetSquare, obstacle) = False
+            While CheckPlacement(targetSquare, obstacle, emptySquares) = False
                 targetSquare = GetRandom(Of xy)(emptySquares)
                 failureCount -= 1
                 If failureCount <= 0 Then Exit Sub
@@ -60,9 +60,9 @@
             PlaceObstacle(targetSquare, obstacle)
 
             'remove obstacle and margin from emptySquares
-            For x = targetSquare.X - 1 To targetSquare.X + obstacle.XWidth
+            For x = targetSquare.X - 1 To targetSquare.X + obstacle.XWidth + 1
                 If x < 0 OrElse x > XRange Then Continue For
-                For y = targetSquare.Y - 1 To targetSquare.Y + obstacle.YWidth
+                For y = targetSquare.Y - 1 To targetSquare.Y + obstacle.YWidth + 1
                     If y < 0 OrElse y > YRange Then Continue For
                     Dim newEmptySquare As xy = GetEmptySquare(emptySquares, x, y)
                     If emptySquares.Contains(newEmptySquare) Then emptySquares.Remove(newEmptySquare)
@@ -70,16 +70,19 @@
             Next
         Next
     End Sub
-    Private Function CheckPlacement(ByVal targetSquare As xy, ByVal obstacle As BattleObstacle) As Boolean
-        'xWidth - 1 because size (1,1) is the same square
+    Private Function CheckPlacement(ByVal targetSquare As xy, ByVal obstacle As BattleObstacle, ByVal emptySquares As List(Of xy)) As Boolean
+        'set reference point for xy nothing
+        Dim xyNothing As New xy(-1, -1)
+
+        'xWidth - 1 because size (1,1) is a single square
         For x = targetSquare.X To (targetSquare.X + obstacle.XWidth - 1)
             For y = targetSquare.Y To (targetSquare.Y + obstacle.YWidth - 1)
                 If x < 0 OrElse x > XRange Then Return False
                 If y < 0 OrElse y > YRange Then Return False
-                If Field(x, y) Is Nothing = False Then Return False
+                If GetEmptySquare(emptySquares, x, y) = xyNothing Then Return False
             Next
         Next
-        Return True
+            Return True
     End Function
     Private Sub PlaceObstacle(ByVal startSquare As xy, ByVal obstacle As BattleObstacle)
         For x = startSquare.X To (startSquare.X + obstacle.XWidth - 1)
@@ -92,7 +95,7 @@
         For Each sq In list
             If sq.X = x AndAlso sq.Y = y Then Return sq
         Next
-        Return Nothing
+        Return New xy(-1, -1)
     End Function
 
     Public Sub ConsoleWrite()
@@ -163,5 +166,14 @@
             X = _x
             Y = _y
         End Sub
+        Public Overrides Function ToString() As String
+            Return X & "," & Y
+        End Function
+        Public Shared Operator =(ByVal a1 As xy, ByVal a2 As xy)
+            If a1.X = a2.X AndAlso a1.Y = a2.Y Then Return True Else Return False
+        End Operator
+        Public Shared Operator <>(ByVal a1 As xy, ByVal a2 As xy)
+            If a1 = a2 Then Return False Else Return True
+        End Operator
     End Structure
 End Class

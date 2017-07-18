@@ -17,6 +17,12 @@
                     .Cover = BattleObstacleCover.Low
                     .XWidth = 1
                     .YWidth = 1
+                Case "Prefab House"
+                    .C = "H"
+                    .IsCrushable = True
+                    .Cover = BattleObstacleCover.Medium
+                    .XWidth = 2
+                    .YWidth = 2
                 Case "Factory"
                     .C = "F"
                     .IsCrushable = False

@@ -39,7 +39,7 @@
             Next
         Next
 
-        Dim numberOfObstacles As Integer = 4
+        Dim numberOfObstacles As Integer = 9
         For n = 1 To numberOfObstacles
             'determine random obstacle to be placed based on terrain
             Dim obstacle As BattleObstacle = BattleObstacle.GetRandomObstacle(Terrain)
@@ -50,19 +50,19 @@
 
             'check if obstacle placement is ok
             Dim failureCount As Integer = 5                     'number of times the system should try to place the obstacle before giving up
-            While CheckPlacement(targetSquare, obstacle.XWidth, obstacle.YWidth) = False
+            While CheckPlacement(targetSquare, obstacle) = False
                 targetSquare = GetRandom(Of xy)(emptySquares)
                 failureCount -= 1
                 If failureCount <= 0 Then Exit Sub
             End While
 
             'add obstacle
-            PlaceObstacle(targetSquare, obstacle.XWidth, obstacle.YWidth, obstacle)
+            PlaceObstacle(targetSquare, obstacle)
 
             'remove obstacle and margin from emptySquares
             For x = targetSquare.X - 1 To targetSquare.X + obstacle.XWidth
+                If x < 0 OrElse x > XRange Then Continue For
                 For y = targetSquare.Y - 1 To targetSquare.Y + obstacle.YWidth
-                    If x < 0 OrElse x > XRange Then Continue For
                     If y < 0 OrElse y > YRange Then Continue For
                     Dim newEmptySquare As xy = GetEmptySquare(emptySquares, x, y)
                     If emptySquares.Contains(newEmptySquare) Then emptySquares.Remove(newEmptySquare)
@@ -70,10 +70,10 @@
             Next
         Next
     End Sub
-    Private Function CheckPlacement(ByVal targetSquare As xy, ByVal xWidth As Integer, ByVal yWidth As Integer) As Boolean
+    Private Function CheckPlacement(ByVal targetSquare As xy, ByVal obstacle As BattleObstacle) As Boolean
         'xWidth - 1 because size (1,1) is the same square
-        For x = targetSquare.X To (targetSquare.X + xWidth - 1)
-            For y = targetSquare.Y To (targetSquare.Y + yWidth - 1)
+        For x = targetSquare.X To (targetSquare.X + obstacle.XWidth - 1)
+            For y = targetSquare.Y To (targetSquare.Y + obstacle.YWidth - 1)
                 If x < 0 OrElse x > XRange Then Return False
                 If y < 0 OrElse y > YRange Then Return False
                 If Field(x, y) Is Nothing = False Then Return False
@@ -81,9 +81,9 @@
         Next
         Return True
     End Function
-    Private Sub PlaceObstacle(ByVal startSquare As xy, ByVal xWidth As Integer, ByVal yWidth As Integer, ByVal obstacle As BattleObstacle)
-        For x = startSquare.X To (startSquare.X + xWidth - 1)
-            For y = startSquare.Y To (startSquare.Y + yWidth - 1)
+    Private Sub PlaceObstacle(ByVal startSquare As xy, ByVal obstacle As BattleObstacle)
+        For x = startSquare.X To (startSquare.X + obstacle.XWidth - 1)
+            For y = startSquare.Y To (startSquare.Y + obstacle.YWidth - 1)
                 Field(x, y) = BattleObstacle.Construct(obstacle)
             Next
         Next

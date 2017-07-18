@@ -39,6 +39,6 @@
         Return total
     End Function
     Public Shared Function GetRandomObstacle(ByVal terrain As BattlefieldTerrain) As BattleObstacle
-
+        Return Construct("Factory")
     End Function
 End Class

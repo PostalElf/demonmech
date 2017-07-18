@@ -32,39 +32,44 @@
         Return bf
     End Function
     Private Sub GenerateObstacles()
-        Dim filledSquares As New List(Of xy)
+        Dim emptySquares As New List(Of xy)
         For x = 0 To XRange
             For y = 0 To YRange
-                If Field(x, y) Is Nothing Then filledSquares.Add(New xy(x, y))
+                If Field(x, y) Is Nothing Then emptySquares.Add(New xy(x, y))
             Next
         Next
 
         Dim numberOfObstacles As Integer = 4
         For n = 1 To numberOfObstacles
             'determine random obstacle to be placed based on terrain
-            Dim obstacle As BattleObstacle = GetRandomObstacle()
-            Dim obstacleSize As xy = GetObstacleSize(obstacle)
-            Dim obstacleXWidth As Integer = obstacleSize.X
-            Dim obstacleYWidth As Integer = obstacleSize.Y
+            Dim obstacle As BattleObstacle = BattleObstacle.GetRandomObstacle(Terrain)
 
             'determine targetsquare; it will always be top-left of the rest of the obstacle structure
             'all obstacles therefore spread right and down
-            Dim targetSquare As xy = GetRandom(Of xy)(filledSquares)
+            Dim targetSquare As xy = GetRandom(Of xy)(emptySquares)
 
             'check if obstacle placement is ok
-            If CheckPlacement(targetSquare, obstacleXWidth, obstacleYWidth) = True Then
+            Dim failureCount As Integer = 5                     'number of times the system should try to place the obstacle before giving up
+            While CheckPlacement(targetSquare, obstacle.XWidth, obstacle.YWidth) = False
+                targetSquare = GetRandom(Of xy)(emptySquares)
+                failureCount -= 1
+                If failureCount <= 0 Then Exit Sub
+            End While
 
-            End If
+            'add obstacle
+            PlaceObstacle(targetSquare, obstacle.XWidth, obstacle.YWidth, obstacle)
+
+            'remove obstacle and margin from emptySquares
+            For x = targetSquare.X - 1 To targetSquare.X + obstacle.XWidth
+                For y = targetSquare.Y - 1 To targetSquare.Y + obstacle.YWidth
+                    If x < 0 OrElse x > XRange Then Continue For
+                    If y < 0 OrElse y > YRange Then Continue For
+                    Dim newEmptySquare As xy = GetEmptySquare(emptySquares, x, y)
+                    If emptySquares.Contains(newEmptySquare) Then emptySquares.Remove(newEmptySquare)
+                Next
+            Next
         Next
     End Sub
-    Private Function GetRandomObstacle() As BattleObstacle
-
-    End Function
-    Private Function GetObstacleSize(ByVal obstacle As BattleObstacle) As xy
-        Select Case obstacle.Name
-            Case "Tank Trap" : Return New xy(1, 1)
-        End Select
-    End Function
     Private Function CheckPlacement(ByVal targetSquare As xy, ByVal xWidth As Integer, ByVal yWidth As Integer) As Boolean
         'xWidth - 1 because size (1,1) is the same square
         For x = targetSquare.X To (targetSquare.X + xWidth - 1)
@@ -83,6 +88,12 @@
             Next
         Next
     End Sub
+    Private Function GetEmptySquare(ByRef list As List(Of xy), ByVal x As Integer, ByVal y As Integer) As xy
+        For Each sq In list
+            If sq.X = x AndAlso sq.Y = y Then Return sq
+        Next
+        Return Nothing
+    End Function
 
     Public Sub ConsoleWrite()
         For y = Mech.Y - Camera.YRange To Mech.Y + Camera.YRange
@@ -144,7 +155,7 @@
         Mech.EndTurn()
     End Sub
 
-    Private Structure xy
+    Public Structure xy
         Public X As Integer
         Public Y As Integer
 

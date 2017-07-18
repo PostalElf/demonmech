@@ -8,6 +8,7 @@ Accuracy: 60
 Range: 3
 DamageType: Energy
 DamageAmount: 1
+Health: 10
 
 [Mechanoid Arm]
 Slot: Arm
@@ -16,8 +17,10 @@ Component: Material - Plate
 Weight: 1
 Defence: Infernal
 Hands: 1
+Health: 10
 
 [Nanocarbon Mech Chasis]
 Slot: Mech Chasis
 Component: Material - Plate
 Weight: 5
+Health: 20

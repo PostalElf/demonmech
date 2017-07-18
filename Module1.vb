@@ -34,6 +34,7 @@
                 Case ConsoleKey.NumPad2 : mech.MoveCombatant(battlefield, "S"c)
                 Case ConsoleKey.X : mech.ConsoleWriteReportExamine()
                 Case ConsoleKey.E : EquipWeapon(mech)
+                Case ConsoleKey.D : TestDamageCombatLimb(mech)
                 Case ConsoleKey.Enter : mech.EndTurn()
             End Select
             Console.Clear()
@@ -52,5 +53,19 @@
         selection -= 1                          'indexes start at 0, not 1
         If selection = -1 Then Exit Sub
         mech.EquipHandWeapon(selection)
+    End Sub
+    Private Sub TestDamageCombatLimb(ByVal mech As Mech)
+        Dim selection As Integer = 0
+        While True
+            Console.WriteLine()
+            mech.ConsoleWriteCombatLimbs()
+            Console.Write("Select limb to damage: ")
+            Dim input As String = Console.ReadLine
+            If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
+        End While
+
+        selection -= 1                          'indexes start at 0, not 1
+        If selection = -1 Then Exit Sub
+        mech.TargetedByAttack(selection, 200, 5, DamageType.Slashing)
     End Sub
 End Module

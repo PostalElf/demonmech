@@ -1,7 +1,6 @@
 ﻿Public Class Mech
     Inherits BattleCombatant
     Private DesignName As String
-    Private CombatLimbs As New List(Of CombatLimb)
     Private MechParts As New List(Of MechPart)
     Private MechDesignModifiers As Component
     Private ReadOnly Property Weight As Integer
@@ -18,7 +17,7 @@
         Get
             Dim total As Integer = 0
             For Each mp In MechParts
-                total += mp.Agility
+                If mp.IsDestroyed = False Then total += mp.Agility
             Next
             total += MechDesignModifiers.Agility
             Return total
@@ -28,7 +27,7 @@
         Get
             Dim total As Integer = 0
             For Each mp In MechParts
-                total += mp.ExtraHands
+                If mp.IsDestroyed = False Then total += mp.ExtraHands
             Next
             total += MechDesignModifiers.ExtraHands
             Return total
@@ -38,7 +37,7 @@
         Get
             Dim total As Integer = 0
             For Each hw In HandWeaponsEquipped
-                total += hw.HandSpace
+                If hw.IsDestroyed = False Then total += hw.HandSpace
             Next
             Return total
         End Get
@@ -52,7 +51,7 @@
         Get
             Dim total As Integer = 0
             For Each mp In MechParts
-                total += mp.InventorySpace
+                If mp.IsDestroyed = False Then total += mp.InventorySpace
             Next
             total += MechDesignModifiers.InventorySpace
             Return total
@@ -62,7 +61,7 @@
         Get
             Dim total As Integer = 0
             For Each hw In HandWeaponsInventory
-                total += hw.HandSpace
+                If hw.IsDestroyed = False Then total += hw.HandSpace
             Next
             Return total
         End Get
@@ -76,7 +75,7 @@
         Get
             Dim total As Integer = 0
             For Each mp In MechParts
-                total += mp.AP
+                If mp.IsDestroyed = False Then total += mp.AP
             Next
             total += MechDesignModifiers.AP
             Return total
@@ -86,7 +85,7 @@
         Get
             Dim total As Integer = 0
             For Each mp In MechParts
-                total += mp.APPerSeal
+                If mp.IsDestroyed = False Then total += mp.APPerSeal
             Next
             total += MechDesignModifiers.APPerSeal
             Return total
@@ -113,10 +112,13 @@
         If mechpart.Slot = "Handweapon" Then
             If InventorySpaceFree - mechpart.HandSpace < 0 Then Return "Insufficient inventory space"
             HandWeaponsInventory.Add(mechpart)
-            CombatLimbs.Add(CombatLimb.construct(mechpart))
+            CombatLimbs.Add(CombatLimb.Construct(mechpart))
+            mechpart.Owner = Me
             Return Nothing
         Else
             MechParts.Add(mechpart)
+            CombatLimbs.Add(CombatLimb.Construct(mechpart))
+            mechpart.Owner = Me
             Return Nothing
         End If
     End Function
@@ -124,10 +126,12 @@
         If mechpart.Slot = "Handweapon" Then
             If HandWeaponsInventory.Contains(mechpart) = False Then Return "Mechpart not in inventory"
             HandWeaponsInventory.Remove(mechpart)
+            mechpart.Owner = Me
             Return Nothing
         Else
             If MechParts.Contains(mechpart) = False Then Return "Mechpart not on mech"
             MechParts.Remove(mechpart)
+            mechpart.Owner = Me
             Return Nothing
         End If
     End Function
@@ -149,6 +153,12 @@
         HandWeaponsInventory.Add(mechpart)
         Return Nothing
     End Function
+    Public Overrides Sub RemoveCombatLimb(ByVal CombatLimb As CombatLimb)
+        CombatLimbs.Remove(CombatLimb)
+    End Sub
+    Public Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal accuracy As Integer, ByVal damage As Integer, ByVal damagetype As DamageType) As String
+        Return CombatLimbs(LimbIndex).TargetedByAttack(accuracy, damage, damagetype)
+    End Function
     Public Sub EndTurn()
         ActionPoints = ActionPointsMax
     End Sub
@@ -168,8 +178,8 @@
             Console.WriteLine("    └ " & hw.Report)
         Next
         Console.WriteLine(" └ MECH PARTS:")
-        For Each mp In MechParts
-            Console.WriteLine("    └ " & mp.Report)
+        For Each cl In CombatLimbs
+            Console.WriteLine("    └ " & cl.Report)
         Next
         Console.ReadKey()
     End Sub
@@ -183,7 +193,8 @@
     Public Sub ConsoleWriteCombatLimbs()
         Dim counter As Integer = 1
         For Each cl In CombatLimbs
-            Console.WriteLine(counter & ") " & cl.report)
+            Console.WriteLine(counter & ") " & cl.Report)
+            counter += 1
         Next
     End Sub
 End Class

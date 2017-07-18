@@ -4,6 +4,7 @@
     Protected MustOverride ReadOnly Property ActionPointsMax As Integer
     Protected MovementPoints As Integer
     Protected MovementPointsMax As Integer
+    Protected CombatLimbs As New List(Of CombatLimb)
     Protected _IsCrusher As Boolean = False
     Public ReadOnly Property IsCrusher As Boolean
         Get
@@ -30,4 +31,5 @@
         ActionPoints -= 1
         bf.PlaceObject(newX, newY, Me)
     End Sub
+    Public MustOverride Sub RemoveCombatLimb(ByVal CombatLimb As CombatLimb)
 End Class

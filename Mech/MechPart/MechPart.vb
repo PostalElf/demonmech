@@ -1,7 +1,8 @@
 ﻿Public Class MechPart
     Inherits Component
     Private BlueprintName As String
-    Public HandSpace As Integer
+    Public Owner As BattleCombatant
+    Public IsDestroyed As Boolean = False
     Private ReadOnly Property IsWeapon As Boolean
         Get
             For Each key In Damage.Keys
@@ -10,6 +11,8 @@
             Return False
         End Get
     End Property
+
+    Public HandSpace As Integer
     Public Damage As New Dictionary(Of DamageType, Integer)
 
     Public Shared Shadows Function Construct(ByVal blueprintName As String, ByVal mechPartName As String, ByVal mechPartSlot As String, ByVal Components As List(Of Component)) As MechPart
@@ -71,6 +74,7 @@
         End If
         Return total
     End Function
+
     Private Function Shortener(ByVal value As String) As String
         Select Case value
             Case "Piercing" : Return "P"

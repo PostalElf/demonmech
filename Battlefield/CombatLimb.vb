@@ -1,5 +1,7 @@
 ﻿Public Class CombatLimb
     Private Name As String
+    Private Owner As BattleCombatant
+    Private MechPart As MechPart
     Private Damage As Integer
     Private Health As Integer
     Private Dodge As Integer
@@ -9,6 +11,7 @@
         Dim combatLimb As New CombatLimb
         With combatLimb
             .Name = mechpart.Name
+            .Owner = mechpart.Owner
             .Health = mechpart.Health
             .Dodge = mechpart.Dodge
             .Defences = mechpart.Defences
@@ -34,10 +37,13 @@
         End If
     End Function
     Private Sub Destroyed()
-
+        Owner.RemoveCombatLimb(Me)
+        Owner = Nothing
+        MechPart.isdestroyed = True
+        MechPart = Nothing
     End Sub
     Public Function Report() As String
-        Dim percentage As Integer = CInt((Health - Damage) / Health)
+        Dim percentage As Integer = CInt((Health - Damage) / Health * 100)
         Dim total As String = Name & " [" & percentage & "%] "
         If Dodge > 0 Then total &= " - Dodge " & Dodge & "% "
         If Defences.Count > 0 Then total &= FormatCommaList(Of DamageType)(Defences)

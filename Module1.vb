@@ -1,6 +1,8 @@
 ﻿Module Module1
 
     Sub Main()
+        Console.SetWindowSize(150, 50)
+
         Dim lasergunBlueprint As Blueprint = Blueprint.Load("Lasergun")
         lasergunBlueprint.AddComponent(Component.Load("Hellstone Crystal"))
         lasergunBlueprint.AddComponent(Component.Load("Hellstone Circuit"))
@@ -110,6 +112,15 @@
         If selection = -1 Then Exit Sub
         Dim target As BattleCombatant = targets(selection)
 
+        While True
+            Console.WriteLine()
+            target.ConsoleWriteCombatLimbs()
+            Console.Write("Select target limb: ")
+            Dim input As String = Console.ReadLine
+            If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
+        End While
 
+        selection -= 1
+        If selection = -1 Then Exit Sub
     End Sub
 End Module

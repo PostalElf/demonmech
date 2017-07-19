@@ -213,7 +213,10 @@
     Public Overrides Sub RemoveCombatLimb(ByVal CombatLimb As CombatLimb)
         CombatLimbs.Remove(CombatLimb)
     End Sub
-    Public Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal accuracy As Integer, ByVal damage As Integer, ByVal damagetype As DamageType) As String
+    Public Overrides Sub RemoveCombatLimb(ByVal index As Integer)
+        RemoveCombatLimb(CombatLimbs(index))
+    End Sub
+    Public Overrides Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal accuracy As Integer, ByVal damage As Integer, ByVal damagetype As DamageType) As String
         Return CombatLimbs(LimbIndex).TargetedByAttack(accuracy, damage, damagetype)
     End Function
     Public Sub EndTurn()
@@ -252,7 +255,7 @@
             counter += 1
         Next
     End Sub
-    Public Sub ConsoleWriteCombatLimbs()
+    Public Overrides Sub ConsoleWriteCombatLimbs()
         Dim counter As Integer = 1
         For Each cl In CombatLimbs
             Console.WriteLine(counter & ") " & cl.Report)

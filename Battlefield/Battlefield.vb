@@ -7,7 +7,7 @@
     Private Camera As Camera
     Private Mech As Mech
 
-    Public Shared Function Construct(ByVal mech As Mech, ByVal xRange As Integer, ByVal yRange As Integer, ByVal camera As Camera, ByVal terrain As BattlefieldTerrain) As Battlefield
+    Public Shared Function Construct(ByVal mech As Mech, ByVal xRange As Integer, ByVal yRange As Integer, ByVal camera As Camera, ByVal terrain As BattlefieldTerrain, Optional ByVal obstacleDensity As Integer = 50) As Battlefield
         Dim bf As New Battlefield
         With bf
             'initialise camera
@@ -27,11 +27,13 @@
             .PlaceObject(mechX, mechY, .Mech)
 
             'generate map obstacles
-            .GenerateObstacles()
+            Dim squareArea As Integer = (xRange - 1) * (yRange - 1)
+            Dim density As Integer = squareArea * obstacleDensity / 100
+            .GenerateObstacles(density)
         End With
         Return bf
     End Function
-    Private Sub GenerateObstacles()
+    Private Sub GenerateObstacles(ByVal density As Integer)
         Dim emptySquares As New List(Of xy)
         For x = 0 To XRange
             For y = 0 To YRange
@@ -39,7 +41,7 @@
             Next
         Next
 
-        Dim numberOfObstacles As Integer = 9
+        Dim numberOfObstacles As Integer = density
         For n = 1 To numberOfObstacles
             'determine random obstacle to be placed based on terrain
             Dim obstacle As BattleObstacle = BattleObstacle.GetRandomObstacle(Terrain)

@@ -22,7 +22,7 @@
         slothDesign.AddMechPart(lasergun)
         Dim mech As Mech = slothDesign.ConstructMech("Sloth v1")
 
-        Dim battlefield As Battlefield = battlefield.Construct(mech, 25, 25, New Camera(10, 10), BattlefieldTerrain.Wasteland)
+        Dim battlefield As Battlefield = battlefield.Construct(mech, 50, 50, New Camera(10, 10), BattlefieldTerrain.Wasteland, 50)
         mech.EndTurn()
         While True
             battlefield.ConsoleWrite()

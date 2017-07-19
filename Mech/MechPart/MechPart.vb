@@ -40,6 +40,8 @@
                 .InventorySpace += Component.InventorySpace
                 .AP += Component.AP
                 .APPerSeal += Component.APPerSeal
+                .MP += Component.MP
+                .MPPerSeal += Component.MPPerSeal
 
                 .Accuracy += Component.Accuracy
                 .Aim += Component.Aim

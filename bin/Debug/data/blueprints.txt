@@ -22,5 +22,6 @@ Health: 10
 [Nanocarbon Mech Chasis]
 Slot: Mech Chasis
 Component: Material - Plate
+Movement: 2
 Weight: 5
 Health: 20

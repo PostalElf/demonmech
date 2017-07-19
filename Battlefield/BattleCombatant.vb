@@ -2,8 +2,8 @@
     Inherits BattleObject
     Public ActionPoints As Integer
     Protected MustOverride ReadOnly Property ActionPointsMax As Integer
-    Protected MovementPoints As Integer
-    Protected MovementPointsMax As Integer
+    Public MovementPoints As Integer
+    Protected MustOverride ReadOnly Property MovementPointsMax As Integer
     Protected CombatLimbs As New List(Of CombatLimb)
     Protected _IsCrusher As Boolean = False
     Public ReadOnly Property IsCrusher As Boolean
@@ -13,7 +13,7 @@
     End Property
 
     Public Sub MoveCombatant(ByVal bf As Battlefield, ByVal direction As Char)
-        If ActionPoints < 1 Then Exit Sub
+        If MovementPoints < 1 AndAlso ActionPoints < 1 Then Exit Sub
 
         Dim newX As Integer = X
         Dim newY As Integer = Y
@@ -26,9 +26,13 @@
         End Select
 
         If bf.CheckMove(newX, newY, Me) = False Then Exit Sub
-        If ActionPoints < 1 Then Exit Sub
 
-        ActionPoints -= 1
+        If MovementPoints > 0 Then
+            MovementPoints -= 1
+        Else
+            ActionPoints -= 1
+        End If
+
         bf.PlaceObject(newX, newY, Me)
     End Sub
     Public MustOverride Sub RemoveCombatLimb(ByVal CombatLimb As CombatLimb)

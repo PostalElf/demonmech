@@ -10,6 +10,8 @@
     Public InventorySpace As Integer            'how much inventory space for handweapons it adds
     Public AP As Integer                        'action points
     Public APPerSeal As Integer                 'how many AP the mech gains per seal undone
+    Public MP As Integer                        'movement points (free movement)
+    Public MPPerSeal As Integer                 'how much MP the mech gains per seal undone
 
     Public Accuracy As Integer              'base percentile accuracy
     Public Aim As Integer                   'how much accuracy weapon gains per additional AP spent aiming
@@ -61,6 +63,8 @@
             Case "Inventory" : InventorySpace += CInt(value)
             Case "AP" : AP += CInt(value)
             Case "APPerSeal" : APPerSeal += CInt(value)
+            Case "Movement", "MP" : MP += CInt(value)
+            Case "MPPerSeal" : MPPerSeal += CInt(value)
 
             Case "Accuracy" : Accuracy = CInt(value)
             Case "Aim" : Aim = CInt(value)

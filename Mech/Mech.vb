@@ -91,6 +91,26 @@
             Return total
         End Get
     End Property
+    Protected Overrides ReadOnly Property MovementPointsMax As Integer
+        Get
+            Dim total As Integer = 0
+            For Each mp In MechParts
+                If mp.IsDestroyed = False Then total += mp.MP
+            Next
+            total += MechDesignModifiers.MP
+            Return total
+        End Get
+    End Property
+    Private ReadOnly Property MPPerSeal As Integer
+        Get
+            Dim total As Integer = 0
+            For Each mp In MechParts
+                If mp.IsDestroyed = False Then total += mp.MPPerSeal
+            Next
+            total += MechDesignModifiers.MPPerSeal
+            Return total
+        End Get
+    End Property
 
     Private HandWeaponsInventory As New List(Of MechPart)
     Private HandWeaponsEquipped As New List(Of MechPart)
@@ -161,10 +181,15 @@
     End Function
     Public Sub EndTurn()
         ActionPoints = ActionPointsMax
+        MovementPoints = MovementPointsMax
     End Sub
 
     Public Sub ConsoleWriteReport()
-        Console.WriteLine("  " & Name & " - " & ActionPoints.ToString("00") & " AP")
+        Dim total As String = "  " & Name & " - "
+        If MovementPoints > 0 Then total &= MovementPoints.ToString("00") & " MP - "
+        total &= ActionPoints.ToString("00") & " AP"
+
+        Console.WriteLine(total)
     End Sub
     Public Sub ConsoleWriteReportExamine()
         Console.WriteLine()

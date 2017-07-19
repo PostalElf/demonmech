@@ -1,6 +1,6 @@
 ﻿Public Enum BattleObstacleCover
     None
     Low
-    Medium
-    Full
+    High
+    Total
 End Enum

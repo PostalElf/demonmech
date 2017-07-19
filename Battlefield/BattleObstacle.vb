@@ -23,14 +23,14 @@
                     .C = "H"
                     .CColour = ConsoleColor.Gray
                     .IsCrushable = True
-                    .Cover = BattleObstacleCover.Medium
+                    .Cover = BattleObstacleCover.High
                     .XWidth = 2
                     .YWidth = 2
                 Case "Factory"
                     .C = "F"
                     .CColour = ConsoleColor.Gray
                     .IsCrushable = False
-                    .Cover = BattleObstacleCover.Full
+                    .Cover = BattleObstacleCover.Total
                     .XWidth = 4
                     .YWidth = 2
                 Case Else : Return Nothing

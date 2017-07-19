@@ -3,7 +3,7 @@
     Private BlueprintName As String
     Public Owner As BattleCombatant
     Public IsDestroyed As Boolean = False
-    Private ReadOnly Property IsWeapon As Boolean
+    Public ReadOnly Property IsWeapon As Boolean
         Get
             For Each key In Damage.Keys
                 If Damage(key) > 0 Then Return True

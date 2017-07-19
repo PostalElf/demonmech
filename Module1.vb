@@ -22,7 +22,7 @@
         slothDesign.AddMechPart(lasergun)
         Dim mech As Mech = slothDesign.ConstructMech("Sloth v1")
 
-        Dim battlefield As Battlefield = battlefield.Construct(mech, 50, 50, New Camera(10, 10), BattlefieldTerrain.Wasteland, 50)
+        Dim battlefield As Battlefield = battlefield.Construct(mech, 50, 50, New Camera(10, 10), BattlefieldTerrain.Wasteland, 80)
         mech.EndTurn()
         While True
             battlefield.ConsoleWrite()
@@ -33,6 +33,7 @@
                 Case ConsoleKey.NumPad4 : mech.MoveCombatant(battlefield, "W"c)
                 Case ConsoleKey.NumPad6 : mech.MoveCombatant(battlefield, "E"c)
                 Case ConsoleKey.NumPad2 : mech.MoveCombatant(battlefield, "S"c)
+                Case ConsoleKey.A : Attack(mech)
                 Case ConsoleKey.X : mech.ConsoleWriteReportExamine()
                 Case ConsoleKey.E : EquipWeapon(mech)
                 Case ConsoleKey.D : TestDamageCombatLimb(mech)
@@ -68,5 +69,24 @@
         selection -= 1                          'indexes start at 0, not 1
         If selection = -1 Then Exit Sub
         mech.TargetedByAttack(selection, 200, 5, DamageType.Slashing)
+    End Sub
+    Private Sub Attack(ByVal mech As Mech)
+        Dim selection As Integer = 0
+        While True
+            Console.WriteLine()
+            Dim counter As Integer = 1
+            For Each w In mech.Weapons
+                Console.WriteLine(counter & ") " & w.Report)
+                counter += 1
+            Next
+            Console.Write("Select weapon to use: ")
+            Dim input As String = Console.ReadLine
+            If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
+        End While
+
+        selection -= 1                          'indexes start at 0, not 1
+        If selection = -1 Then Exit Sub
+        Dim weapon As MechPart = mech.Weapons(selection)
+
     End Sub
 End Module

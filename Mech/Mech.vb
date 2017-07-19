@@ -114,6 +114,18 @@
 
     Private HandWeaponsInventory As New List(Of MechPart)
     Private HandWeaponsEquipped As New List(Of MechPart)
+    Public ReadOnly Property Weapons As List(Of MechPart)
+        Get
+            Dim total As New List(Of MechPart)
+            For Each hw In HandWeaponsEquipped
+                If hw.IsWeapon = True Then total.Add(hw)
+            Next
+            For Each mp In MechParts
+                If mp.IsDestroyed = False AndAlso mp.IsWeapon = True Then total.Add(mp)
+            Next
+            Return total
+        End Get
+    End Property
 
     Public Shared Function Construct(ByVal mechDesignName As String, ByRef mechDesignModifiers As Component) As Mech
         Dim mech As New Mech

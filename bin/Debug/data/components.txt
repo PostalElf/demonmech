@@ -12,7 +12,7 @@ DamageAmount: 1
 [Revolver Chasis]
 Category: Gun Chasis
 Weight: 5
-Range: -1
+Range: +1
 DamageAmount: 5
 DamageType: Energy
 

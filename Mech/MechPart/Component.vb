@@ -13,10 +13,11 @@
     Public MP As Integer                        'movement points (free movement)
     Public MPPerSeal As Integer                 'how much MP the mech gains per seal undone
 
-    Public Accuracy As Integer              'base percentile accuracy
-    Public Aim As Integer                   'how much accuracy weapon gains per additional AP spent aiming
-    Public AimAP As Integer                 'how much AP can be spent aiming
-    Public Range As Integer                 'how many squares away the weapon can hit
+    Public Accuracy As Integer                  'base percentile accuracy
+    Public Aim As Integer                       'how much accuracy weapon gains per additional AP spent aiming
+    Public AimAP As Integer                     'how much AP can be spent aiming
+    Public Range As Integer                     'how many squares away the weapon can hit
+    Public CoverIgnore As BattleObstacleCover = 0 'what level of cover to ignore
     Public DamageAmount As Integer
     Public DamageType As DamageType
     Public ReadOnly Property IsNotEmpty As Boolean
@@ -57,7 +58,7 @@
             Case "Weight" : Weight = CInt(value)
             Case "Agility" : Agility = CInt(value)
             Case "Dodge" : Dodge = CInt(value)
-            Case "Defence" : Defences.Add(String2DamageType(value))
+            Case "Defence" : Defences.Add(String2Enum(Of DamageType)(value))
             Case "Health" : Health = CInt(value)
             Case "Hands" : ExtraHands = CInt(value)
             Case "Inventory" : InventorySpace += CInt(value)
@@ -70,6 +71,7 @@
             Case "Aim" : Aim = CInt(value)
             Case "AimAP" : AimAP = CInt(value)
             Case "Range" : Range = CInt(value)
+            Case "CoverIgnore" : CoverIgnore = String2Enum(Of BattleObstacleCover)(value)
             Case "DamageAmount" : DamageAmount = CInt(value)
             Case "DamageType"
                 For Each dt In [Enum].GetValues(GetType(DamageType))
@@ -79,12 +81,5 @@
     End Sub
     Public Overrides Function ToString() As String
         If Name = "" Then Return "-" Else Return Name
-    End Function
-
-    Private Shared Function String2DamageType(ByVal value As String) As DamageType
-        For Each dt In [Enum].GetValues(GetType(DamageType))
-            If dt.ToString = value Then Return dt
-        Next
-        Return Nothing
     End Function
 End Class

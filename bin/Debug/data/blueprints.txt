@@ -16,7 +16,7 @@ Component: Motor
 Component: Material - Plate
 Weight: 1
 Defence: Infernal
-Accuracy: 501:19 PM 7/19/2017
+Accuracy: 50
 Range: 1
 DamageType: Slashing
 DamageAmount: 2

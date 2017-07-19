@@ -47,6 +47,7 @@
                 .Aim += Component.Aim
                 .AimAP += Component.AimAP
                 .Range += Component.Range
+                If Component.CoverIgnore > .CoverIgnore Then .CoverIgnore = Component.CoverIgnore
                 If Component.DamageType <> 0 Then .Damage(Component.DamageType) += Component.DamageAmount
             Next
 
@@ -66,7 +67,7 @@
     Public Function Report() As String
         Dim total As String = Name & " [" & Slot & "]"
         If IsWeapon = True Then
-            total &= ": " & Accuracy & "%"
+            total &= ": " & "r" & Range & " - " & Accuracy & "%"
             If AimAP > 0 Then total &= " (+" & Aim & " x" & AimAP & ")"
             total &= " - "
             For Each key In Damage.Keys

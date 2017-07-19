@@ -159,6 +159,35 @@
             Return True
         End If
     End Function
+    Public Function GetSquares(ByVal originX As Integer, ByVal originY As Integer, ByVal range As Integer, ByVal direction As Char) As List(Of BattleObject)
+        If range = 0 Then Return Nothing
+
+        Dim total As New List(Of BattleObject)
+        Select Case direction
+            Case "N"c
+                For y = (originY - 1) To (originY - range) Step -1
+                    If y < 0 Then Exit For
+                    total.Add(Field(originX, y))
+                Next
+            Case "S"c
+                For y = (originY + 1) To (originY + range)
+                    If y > YRange Then Exit For
+                    total.Add(Field(originX, y))
+                Next
+            Case "E"c
+                For x = (originX + 1) To (originX + range)
+                    If x > XRange Then Exit For
+                    total.Add(Field(x, originY))
+                Next
+            Case "W"c
+                For x = (originX - 1) To (originX - range) Step -1
+                    If x < 0 Then Exit For
+                    total.Add(Field(x, originY))
+                Next
+            Case Else : Throw New Exception("Unexpected direction character") : Return Nothing
+        End Select
+        Return total
+    End Function
     Public Sub EndPlayerTurn()
         Mech.EndTurn()
     End Sub

@@ -126,6 +126,31 @@
             Return total
         End Get
     End Property
+    Public ReadOnly Property WeaponTargets(ByVal battlefield As Battlefield, ByVal weapon As MechPart) As List(Of BattleCombatant)
+        Get
+            Dim total As New List(Of BattleCombatant)
+            Dim directions As Char() = {"N"c, "E"c, "S"c, "W"c}
+            Dim range As Integer = weapon.Range
+
+            For Each d In directions
+                Dim squares As List(Of BattleObject) = battlefield.GetSquares(X, Y, range, d)
+                Dim highestCover As BattleObstacleCover = BattleObstacleCover.None
+                For Each square In squares
+                    If square Is Nothing Then Continue For
+                    If TypeOf square Is BattleObstacle Then
+                        'if there's an obstacle, add it to highest cover
+                        Dim obstacle As BattleObstacle = CType(square, BattleObstacle)
+                        If highestCover < obstacle.Cover Then highestCover = obstacle.Cover
+                    ElseIf TypeOf square Is BattleCombatant Then
+                        'if it's a combatant, check if there's cover previously in the way
+                        'if there's cover, and weapon ignores the cover, add target to list
+                        If weapon.CoverIgnore >= highestCover Then total.Add(square)
+                    End If
+                Next
+            Next
+            Return total
+        End Get
+    End Property
 
     Public Shared Function Construct(ByVal mechDesignName As String, ByRef mechDesignModifiers As Component) As Mech
         Dim mech As New Mech

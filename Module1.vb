@@ -33,7 +33,7 @@
                 Case ConsoleKey.NumPad4 : mech.MoveCombatant(battlefield, "W"c)
                 Case ConsoleKey.NumPad6 : mech.MoveCombatant(battlefield, "E"c)
                 Case ConsoleKey.NumPad2 : mech.MoveCombatant(battlefield, "S"c)
-                Case ConsoleKey.A : Attack(mech)
+                Case ConsoleKey.A : Attack(battlefield, mech)
                 Case ConsoleKey.X : mech.ConsoleWriteReportExamine()
                 Case ConsoleKey.E : EquipWeapon(mech)
                 Case ConsoleKey.D : TestDamageCombatLimb(mech)
@@ -70,7 +70,7 @@
         If selection = -1 Then Exit Sub
         mech.TargetedByAttack(selection, 200, 5, DamageType.Slashing)
     End Sub
-    Private Sub Attack(ByVal mech As Mech)
+    Private Sub Attack(ByVal battlefield As Battlefield, ByVal mech As Mech)
         Dim selection As Integer = 0
         While True
             Console.WriteLine()
@@ -87,6 +87,29 @@
         selection -= 1                          'indexes start at 0, not 1
         If selection = -1 Then Exit Sub
         Dim weapon As MechPart = mech.Weapons(selection)
+        Dim targets As List(Of BattleCombatant) = mech.WeaponTargets(battlefield, weapon)
+        If targets.Count = 0 Then
+            Console.WriteLine("No available targets!")
+            Console.ReadKey()
+            Exit Sub
+        End If
+
+        While True
+            Console.WriteLine()
+            Dim counter As Integer = 1
+            For Each t In targets
+                Console.WriteLine(counter & ") " & t.Name)
+                counter += 1
+            Next
+            Console.Write("Select target: ")
+            Dim input As String = Console.ReadLine
+            If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
+        End While
+
+        selection -= 1
+        If selection = -1 Then Exit Sub
+        Dim target As BattleCombatant = targets(selection)
+
 
     End Sub
 End Module

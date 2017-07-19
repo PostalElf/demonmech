@@ -18,4 +18,10 @@ Public Module Common
         GrabRandom = list(roll)
         list.RemoveAt(roll)
     End Function
+    Public Function String2Enum(Of T)(ByVal value As String) As T
+        For Each dt In [Enum].GetValues(GetType(T))
+            If dt.ToString = value Then Return dt
+        Next
+        Return Nothing
+    End Function
 End Module

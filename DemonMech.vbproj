@@ -78,6 +78,7 @@
     <Compile Include="Battlefield\BattleObstacle.vb" />
     <Compile Include="Battlefield\CombatLimb.vb" />
     <Compile Include="Dev\Common.vb" />
+    <Compile Include="Dev\iReportable.vb" />
     <Compile Include="Mech\MechPart\MechPart.vb" />
     <Compile Include="Mech\Mech.vb" />
     <Compile Include="Mech\MechDesign.vb" />

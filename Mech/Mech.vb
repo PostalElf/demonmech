@@ -216,6 +216,9 @@
     Public Overrides Sub RemoveCombatLimb(ByVal index As Integer)
         RemoveCombatLimb(CombatLimbs(index))
     End Sub
+    Public Overrides Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal weapon As MechPart) As String
+        Return TargetedByAttack(LimbIndex, weapon.Accuracy, weapon.DamageAmount, weapon.DamageType)
+    End Function
     Public Overrides Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal accuracy As Integer, ByVal damage As Integer, ByVal damagetype As DamageType) As String
         Return CombatLimbs(LimbIndex).TargetedByAttack(accuracy, damage, damagetype)
     End Function
@@ -248,17 +251,18 @@
         Next
         Console.ReadKey()
     End Sub
-    Public Sub ConsoleWriteHandWeaponsInventory()
+    Public Overrides Sub ConsoleWrite(ByVal targetListName As String)
+        Dim targetList As System.Collections.Generic.IEnumerable(Of iReportable)
+        Select Case targetListName
+            Case "CombatLimbs" : targetList = CombatLimbs
+            Case "HandWeaponsInventory" : targetList = HandWeaponsInventory
+            Case "Weapons" : targetList = Weapons
+            Case Else : Exit Sub
+        End Select
+
         Dim counter As Integer = 1
-        For Each hwp In HandWeaponsInventory
-            Console.WriteLine(counter & ") " & hwp.Report)
-            counter += 1
-        Next
-    End Sub
-    Public Overrides Sub ConsoleWriteCombatLimbs()
-        Dim counter As Integer = 1
-        For Each cl In CombatLimbs
-            Console.WriteLine(counter & ") " & cl.Report)
+        For Each thing In targetList
+            Console.WriteLine(counter & ") " & thing.Report)
             counter += 1
         Next
     End Sub

@@ -1,4 +1,5 @@
 ﻿Public Class CombatLimb
+    Implements iReportable
     Private Name As String
     Private Owner As BattleCombatant
     Private MechPart As MechPart
@@ -42,7 +43,7 @@
         MechPart.isdestroyed = True
         MechPart = Nothing
     End Sub
-    Public Function Report() As String
+    Public Function Report() As String Implements iReportable.Report
         Dim percentage As Integer = CInt((Health - Damage) / Health * 100)
         Dim total As String = Name & " [" & percentage & "%] "
         If Dodge > 0 Then total &= " - Dodge " & Dodge & "% "

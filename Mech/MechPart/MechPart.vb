@@ -1,5 +1,6 @@
 ﻿Public Class MechPart
     Inherits Component
+    Implements iReportable
     Private BlueprintName As String
     Public Owner As BattleCombatant
     Public IsDestroyed As Boolean = False
@@ -64,7 +65,7 @@
     Public Overrides Function ToString() As String
         Return Name
     End Function
-    Public Function Report() As String
+    Public Function Report() As String Implements iReportable.Report
         Dim total As String = Name & " [" & Slot & "]"
         If IsWeapon = True Then
             total &= ": " & "r" & Range & " - " & Accuracy & "%"

@@ -35,7 +35,8 @@
 
         bf.PlaceObject(newX, newY, Me)
     End Sub
-    Public MustOverride Sub ConsoleWriteCombatLimbs()
+    Public MustOverride Sub ConsoleWrite(ByVal targetListName As String)
+    Public MustOverride Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal weapon As MechPart) As String
     Public MustOverride Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal accuracy As Integer, ByVal damage As Integer, ByVal damagetype As DamageType) As String
     Public MustOverride Sub RemoveCombatLimb(ByVal CombatLimb As CombatLimb)
     Public MustOverride Sub RemoveCombatLimb(ByVal index As Integer)

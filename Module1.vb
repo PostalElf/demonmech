@@ -44,51 +44,34 @@
             Console.Clear()
         End While
     End Sub
-    Private Sub EquipWeapon(ByVal mech As Mech)
+    Private Function ChooseFromList(ByVal combatant As BattleCombatant, ByVal listName As String, ByVal prompt As String) As Integer
         Dim selection As Integer = 0
         While True
             Console.WriteLine()
-            mech.ConsoleWriteHandWeaponsInventory()
-            Console.Write("Select weapon to equip: ")
+            combatant.ConsoleWrite(listName)
+            Console.Write(prompt)
             Dim input As String = Console.ReadLine
             If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
         End While
 
         selection -= 1                          'indexes start at 0, not 1
+        Return selection
+    End Function
+    Private Sub EquipWeapon(ByVal mech As Mech)
+        Dim selection As Integer = ChooseFromList(mech, "HandWeaponsInventory", "Select weapon to equip: ")
         If selection = -1 Then Exit Sub
         mech.EquipHandWeapon(selection)
     End Sub
     Private Sub TestDamageCombatLimb(ByVal mech As Mech)
-        Dim selection As Integer = 0
-        While True
-            Console.WriteLine()
-            mech.ConsoleWriteCombatLimbs()
-            Console.Write("Select limb to damage: ")
-            Dim input As String = Console.ReadLine
-            If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
-        End While
-
-        selection -= 1                          'indexes start at 0, not 1
+        Dim selection As Integer = ChooseFromList(mech, "CombatLimbs", "Select limb to damage: ")
         If selection = -1 Then Exit Sub
-        mech.TargetedByAttack(selection, 200, 5, DamageType.Slashing)
+        mech.TargetedByAttack(selection, 200, 1, DamageType.Slashing)
     End Sub
     Private Sub Attack(ByVal battlefield As Battlefield, ByVal mech As Mech)
-        Dim selection As Integer = 0
-        While True
-            Console.WriteLine()
-            Dim counter As Integer = 1
-            For Each w In mech.Weapons
-                Console.WriteLine(counter & ") " & w.Report)
-                counter += 1
-            Next
-            Console.Write("Select weapon to use: ")
-            Dim input As String = Console.ReadLine
-            If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
-        End While
-
-        selection -= 1                          'indexes start at 0, not 1
+        Dim selection As Integer = ChooseFromList(mech, "Weapons", "Select weapon to use: ")
         If selection = -1 Then Exit Sub
         Dim weapon As MechPart = mech.Weapons(selection)
+
         Dim targets As List(Of BattleCombatant) = mech.WeaponTargets(battlefield, weapon)
         If targets.Count = 0 Then
             Console.WriteLine("No available targets!")
@@ -107,20 +90,12 @@
             Dim input As String = Console.ReadLine
             If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
         End While
-
         selection -= 1
         If selection = -1 Then Exit Sub
         Dim target As BattleCombatant = targets(selection)
 
-        While True
-            Console.WriteLine()
-            target.ConsoleWriteCombatLimbs()
-            Console.Write("Select target limb: ")
-            Dim input As String = Console.ReadLine
-            If IsNumeric(input) = True Then selection = Convert.ToInt32(input) : Exit While
-        End While
-
-        selection -= 1
-        If selection = -1 Then Exit Sub
+        Dim targetLimbIndex As Integer = ChooseFromList(target, "CombatLimbs", "Select target limb: ")
+        If targetLimbIndex = -1 Then Exit Sub
+        Console.WriteLine(target.TargetedByAttack(targetLimbIndex, weapon))
     End Sub
 End Module

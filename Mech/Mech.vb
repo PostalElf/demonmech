@@ -210,18 +210,6 @@
         HandWeaponsInventory.Add(mechpart)
         Return Nothing
     End Function
-    Public Overrides Sub RemoveCombatLimb(ByVal CombatLimb As CombatLimb)
-        CombatLimbs.Remove(CombatLimb)
-    End Sub
-    Public Overrides Sub RemoveCombatLimb(ByVal index As Integer)
-        RemoveCombatLimb(CombatLimbs(index))
-    End Sub
-    Public Overrides Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal weapon As MechPart) As String
-        Return TargetedByAttack(LimbIndex, weapon.Accuracy, weapon.DamageAmount, weapon.DamageType)
-    End Function
-    Public Overrides Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal accuracy As Integer, ByVal damage As Integer, ByVal damagetype As DamageType) As String
-        Return CombatLimbs(LimbIndex).TargetedByAttack(accuracy, damage, damagetype)
-    End Function
     Public Sub EndTurn()
         ActionPoints = ActionPointsMax
         MovementPoints = MovementPointsMax

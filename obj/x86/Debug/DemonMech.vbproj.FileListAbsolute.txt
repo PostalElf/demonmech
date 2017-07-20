@@ -14,3 +14,11 @@ D:\Visual Studio Projects\demonmech\bin\Debug\DemonMech.pdb
 D:\Visual Studio Projects\demonmech\bin\Debug\DemonMech.xml
 D:\Visual Studio Projects\demonmech\obj\x86\Debug\DemonMech.Resources.resources
 D:\Visual Studio Projects\demonmech\obj\x86\Debug\DemonMech.vbproj.GenerateResource.Cache
+C:\DemonMech\demonmech\obj\x86\Debug\DemonMech.exe
+C:\DemonMech\demonmech\obj\x86\Debug\DemonMech.xml
+C:\DemonMech\demonmech\obj\x86\Debug\DemonMech.pdb
+C:\DemonMech\demonmech\bin\Debug\DemonMech.exe
+C:\DemonMech\demonmech\bin\Debug\DemonMech.pdb
+C:\DemonMech\demonmech\bin\Debug\DemonMech.xml
+C:\DemonMech\demonmech\obj\x86\Debug\DemonMech.Resources.resources
+C:\DemonMech\demonmech\obj\x86\Debug\DemonMech.vbproj.GenerateResource.Cache

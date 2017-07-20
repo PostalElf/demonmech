@@ -40,8 +40,10 @@
     Private Sub Destroyed()
         Owner.RemoveCombatLimb(Me)
         Owner = Nothing
-        MechPart.isdestroyed = True
-        MechPart = Nothing
+        If MechPart Is Nothing = False Then
+            MechPart.IsDestroyed = True
+            MechPart = Nothing
+        End If
     End Sub
     Public Function Report() As String Implements iReportable.Report
         Dim percentage As Integer = CInt((Health - Damage) / Health * 100)

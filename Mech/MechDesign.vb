@@ -20,7 +20,7 @@
                 .construct(key, value)
             End While
 
-            .Mech = Mech.Construct(.Name, .MechDesignModifiers)
+            .Mech = Mech.BuildMech(.Name, .MechDesignModifiers)
         End With
         Return mechDesign
     End Function

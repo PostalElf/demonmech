@@ -152,7 +152,7 @@
         End Get
     End Property
 
-    Public Shared Function Construct(ByVal mechDesignName As String, ByRef mechDesignModifiers As Component) As Mech
+    Public Shared Function BuildMech(ByVal mechDesignName As String, ByRef mechDesignModifiers As Component) As Mech
         Dim mech As New Mech
         With mech
             .DesignName = mechDesignName

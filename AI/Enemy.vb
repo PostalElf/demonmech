@@ -21,9 +21,29 @@
 
     Private Weapons As New List(Of MechPart)
 
-    Public Shared Function Load(ByVal enemyName As String) As Enemy
+    Public Shared Function Load(ByVal enemyName As String)
+        Const path = "data/enemies.txt"
+        Dim q As Queue(Of String) = SquareBracketLoader(path, enemyName)
 
+        Dim enemy As New Enemy
+        With enemy
+            .Name = q.Dequeue()
+            While q.Count > 0
+                Dim line As String() = q.Dequeue.Split(":")
+                Dim key As String = line(0).Trim
+                Dim value As String = line(1).Trim
+                .Construct(key, value)
+            End While
+        End With
+        Return enemy
     End Function
+    Private Sub Construct(ByVal key As String, ByVal value As String)
+        Select Case key
+            Case "Char" : _C = CChar(value)
+            Case "AP" : _ActionPointsMax = CInt(value)
+            Case "MP" : _MovementPointsMax = CInt(value)
+        End Select
+    End Sub
     Public Overrides Function ToString() As String
         Return Name
     End Function

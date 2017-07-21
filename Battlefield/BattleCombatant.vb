@@ -54,8 +54,8 @@
         Dim total As String = Name
         Dim totalHealth, totalDamage As Integer
         For Each cl In CombatLimbs
-            totalHealth += cl.health
-            totalDamage += cl.damage
+            totalHealth += cl.Health
+            totalDamage += cl.Damage
         Next
         Dim healthPercent As Integer = CInt((totalHealth - totalDamage) / totalHealth * 100)
         total &= " [" & healthPercent & "%] "

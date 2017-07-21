@@ -26,6 +26,8 @@
 
         Dim battlefield As Battlefield = battlefield.Construct(mech, 50, 50, New Camera(10, 10), BattlefieldTerrain.Wasteland, 80)
         mech.EndTurn()
+        Dim enemy As New Enemy
+        battlefield.PlaceObject(mech.X, mech.Y - 2, enemy)
         While True
             battlefield.ConsoleWrite()
             Console.ForegroundColor = ConsoleColor.White
@@ -83,7 +85,7 @@
             Console.WriteLine()
             Dim counter As Integer = 1
             For Each t In targets
-                Console.WriteLine(counter & ") " & t.Name)
+                Console.WriteLine(counter & ") " & t.Report)
                 counter += 1
             Next
             Console.Write("Select target: ")

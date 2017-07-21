@@ -3,8 +3,18 @@
     Private Name As String
     Private Owner As BattleCombatant
     Private MechPart As MechPart
-    Private Damage As Integer
-    Private Health As Integer
+    Private _Damage As Integer
+    Public ReadOnly Property Damage As Integer
+        Get
+            Return _Damage
+        End Get
+    End Property
+    Private _Health As Integer
+    Public ReadOnly Property Health As Integer
+        Get
+            Return _Health
+        End Get
+    End Property
     Private Dodge As Integer
     Private Defences As New List(Of DamageType)
 
@@ -13,7 +23,7 @@
         With combatLimb
             .Name = mechpart.Name
             .Owner = mechpart.Owner
-            .Health = mechpart.Health
+            ._Health = mechpart.Health
             .Dodge = mechpart.Dodge
             .Defences = mechpart.Defences
         End With
@@ -28,10 +38,10 @@
             'defences halve damage
             Dim dmg As Integer = attackDamage
             If Defences.Contains(damageType) Then dmg = Math.Floor(attackDamage / 2)
-            Damage += dmg
+            _Damage += dmg
             TargetedByAttack = "Hit " & dmg & " " & damageType.ToString
 
-            If Damage > Health Then Destroyed()
+            If _Damage > _Health Then Destroyed()
         Else
             'miss
             Return "Miss"
@@ -46,7 +56,7 @@
         End If
     End Sub
     Public Function Report() As String Implements iReportable.Report
-        Dim percentage As Integer = CInt((Health - Damage) / Health * 100)
+        Dim percentage As Integer = CInt((_Health - _Damage) / _Health * 100)
         Dim total As String = Name & " [" & percentage & "%] "
         If Dodge > 0 Then total &= " - Dodge " & Dodge & "% "
         If Defences.Count > 0 Then total &= FormatCommaList(Of DamageType)(Defences)

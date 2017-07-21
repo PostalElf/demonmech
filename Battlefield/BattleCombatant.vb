@@ -1,5 +1,6 @@
 ﻿Public MustInherit Class BattleCombatant
     Inherits BattleObject
+    Implements iReportable
     Public ActionPoints As Integer
     Protected MustOverride ReadOnly Property ActionPointsMax As Integer
     Public MovementPoints As Integer
@@ -48,4 +49,17 @@
     Public Sub RemoveCombatLimb(ByVal index As Integer)
         RemoveCombatLimb(CombatLimbs(index))
     End Sub
+
+    Public Function Report() As String Implements iReportable.Report
+        Dim total As String = Name
+        Dim totalHealth, totalDamage As Integer
+        For Each cl In CombatLimbs
+            totalHealth += cl.health
+            totalDamage += cl.damage
+        Next
+        Dim healthPercent As Integer = CInt((totalHealth - totalDamage) / totalHealth * 100)
+        total &= " [" & healthPercent & "%] "
+
+        Return total
+    End Function
 End Class

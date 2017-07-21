@@ -6,6 +6,7 @@
         Get
             Select Case Me.GetType
                 Case GetType(Mech) : Return "@"
+                Case GetType(Enemy) : Return CType(Me, Enemy).C
                 Case GetType(BattleObstacle) : Return CType(Me, BattleObstacle).C
                 Case Else : Return " "
             End Select

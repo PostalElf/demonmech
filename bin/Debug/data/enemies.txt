@@ -1,0 +1,5 @@
+[Badguy]
+Char: b
+AP: 5
+MP: 1
+Limb: 

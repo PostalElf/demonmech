@@ -6,6 +6,30 @@
     Public MovementPoints As Integer
     Protected MustOverride ReadOnly Property MovementPointsMax As Integer
     Protected CombatLimbs As New List(Of CombatLimb)
+    Protected ReadOnly Property TotalHealth As Integer
+        Get
+            Dim total As Integer = 0
+            For Each cl In CombatLimbs
+                total += cl.Health
+            Next
+            Return total
+        End Get
+    End Property
+    Protected ReadOnly Property TotalDamage As Integer
+        Get
+            Dim total As Integer = 0
+            For Each cl In CombatLimbs
+                total += cl.Damage
+            Next
+            Return total
+        End Get
+    End Property
+    Protected ReadOnly Property TotalHealthPercentage As Integer
+        Get
+            If TotalHealth = 0 OrElse TotalDamage = 0 Then Return 100
+            Return CInt((TotalHealth - TotalDamage) / TotalHealth * 100)
+        End Get
+    End Property
     Protected _IsCrusher As Boolean = False
     Public ReadOnly Property IsCrusher As Boolean
         Get
@@ -51,15 +75,7 @@
     End Sub
 
     Public Function Report() As String Implements iReportable.Report
-        Dim total As String = Name
-        Dim totalHealth, totalDamage As Integer
-        For Each cl In CombatLimbs
-            totalHealth += cl.Health
-            totalDamage += cl.Damage
-        Next
-        Dim healthPercent As Integer = CInt((totalHealth - totalDamage) / totalHealth * 100)
-        total &= " [" & healthPercent & "%] "
-
+        Dim total As String = Name & " [" & TotalHealthPercentage & "%] "
         Return total
     End Function
 End Class

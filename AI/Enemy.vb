@@ -42,6 +42,7 @@
             Case "Char" : _C = CChar(value)
             Case "AP" : _ActionPointsMax = CInt(value)
             Case "MP" : _MovementPointsMax = CInt(value)
+            Case "Limb" : CombatLimb.Construct(Me, value.Split("|"))
         End Select
     End Sub
     Public Overrides Function ToString() As String

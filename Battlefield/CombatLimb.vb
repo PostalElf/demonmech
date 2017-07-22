@@ -29,6 +29,23 @@
         End With
         Return combatLimb
     End Function
+    Public Shared Function Construct(ByRef owner As BattleCombatant, ByVal value As String()) As CombatLimb
+        Dim cl As New CombatLimb
+        With cl
+            Dim ac As New AutoIncrementer
+            .Owner = owner
+
+            .Name = value(ac.N)
+            ._Health = CInt(value(ac.N))
+            .Dodge = CInt(value(ac.N))
+            Dim defences As String() = value(ac.N).Split(",")
+            For Each defence In defences
+                Dim modDefence As DamageType = String2Enum(Of DamageType)(defence)
+                If modDefence <> 0 Then .Defences.Add(modDefence)
+            Next
+        End With
+        Return cl
+    End Function
 
     Public Function TargetedByAttack(ByVal attackAccuracy As Integer, ByVal attackDamage As Integer, ByVal damageType As DamageType) As String
         Dim accuracy As Integer = attackAccuracy - Dodge

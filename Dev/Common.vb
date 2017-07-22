@@ -25,3 +25,11 @@ Public Module Common
         Return Nothing
     End Function
 End Module
+
+Public Class AutoIncrementer
+    Private Shared Counter As Integer = 0
+    Public Function N() As Integer
+        N = Counter
+        Counter += 1
+    End Function
+End Class

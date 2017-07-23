@@ -26,7 +26,7 @@
 
         Dim battlefield As Battlefield = battlefield.Construct(mech, 50, 50, New Camera(10, 10), BattlefieldTerrain.Wasteland, 80)
         mech.EndTurn()
-        Dim enemy As New Enemy
+        Dim enemy As Enemy = enemy.Load("Badguy")
         battlefield.PlaceObject(mech.X, mech.Y - 2, enemy)
         While True
             battlefield.ConsoleWrite()
@@ -67,7 +67,13 @@
     Private Sub TestDamageCombatLimb(ByVal mech As Mech)
         Dim selection As Integer = ChooseFromList(mech, "CombatLimbs", "Select limb to damage: ")
         If selection = -1 Then Exit Sub
-        mech.TargetedByAttack(selection, 200, 1, DamageType.Slashing)
+
+        Dim damageDictionary As New Dictionary(Of DamageType, Integer)
+        For Each dt In [Enum].GetValues(GetType(DamageType))
+            damageDictionary.Add(dt, 1)
+        Next
+
+        mech.TargetedByAttack(selection, 200, damageDictionary)
     End Sub
     Private Sub Attack(ByVal battlefield As Battlefield, ByVal mech As Mech)
         Dim selection As Integer = ChooseFromList(mech, "Weapons", "Select weapon to use: ")
@@ -99,5 +105,6 @@
         Dim targetLimbIndex As Integer = ChooseFromList(target, "CombatLimbs", "Select target limb: ")
         If targetLimbIndex = -1 Then Exit Sub
         Console.WriteLine(target.TargetedByAttack(targetLimbIndex, weapon))
+        Console.ReadKey()
     End Sub
 End Module

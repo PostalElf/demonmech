@@ -47,18 +47,23 @@
         Return cl
     End Function
 
-    Public Function TargetedByAttack(ByVal attackAccuracy As Integer, ByVal attackDamage As Integer, ByVal damageType As DamageType) As String
+    Public Function TargetedByAttack(ByVal attackAccuracy As Integer, ByVal damage As Dictionary(Of DamageType, Integer)) As String
         Dim accuracy As Integer = attackAccuracy - Dodge
+        Dim totalDmg As Integer = 0
         Dim roll As Integer = Rng.Next(1, 101)
         If roll <= accuracy Then
-            'hit; check for defences
+            'hit; check for defences through all damage types
             'defences halve damage
-            Dim dmg As Integer = attackDamage
-            If Defences.Contains(damageType) Then dmg = Math.Floor(attackDamage / 2)
-            _Damage += dmg
-            TargetedByAttack = "Hit " & dmg & " " & damageType.ToString
+            For Each dt In damage.Keys
+                Dim dmg As Integer = damage(dt)
+                If dmg <= 0 Then Continue For
+                If Defences.Contains(dt) Then dmg = Math.Floor(dmg / 2)
+                _Damage += dmg
+                totalDmg += dmg
+            Next
 
             If _Damage > _Health Then Destroyed()
+            TargetedByAttack = "Hit " & totalDmg
         Else
             'miss
             Return "Miss"
@@ -76,7 +81,7 @@
         Dim percentage As Integer = CInt((_Health - _Damage) / _Health * 100)
         Dim total As String = Name & " [" & percentage & "%] "
         If Dodge > 0 Then total &= " - Dodge " & Dodge & "% "
-        If Defences.Count > 0 Then total &= FormatCommaList(Of DamageType)(Defences)
+        If Defences.Count > 0 Then total &= "vs " & FormatCommaList(Of DamageType)(Defences)
         Return total
     End Function
 End Class

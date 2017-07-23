@@ -2,4 +2,4 @@
 Char: b
 AP: 5
 MP: 1
-Limb: 
+Limb: Head|10|0|Piercing

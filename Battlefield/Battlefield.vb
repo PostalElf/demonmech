@@ -134,7 +134,12 @@
 
         battleObject.X = x
         battleObject.Y = y
+        If battleObject.Battlefield Is Nothing Then battleObject.Battlefield = Me
         Field(x, y) = battleObject
+    End Sub
+    Public Sub RemoveObject(ByVal battleObject As BattleObject)
+        battleObject.Battlefield = Nothing
+        Field(battleObject.X, battleObject.Y) = Nothing
     End Sub
     Public Function CheckMove(ByVal x As Integer, ByVal y As Integer, ByVal battlecombatant As BattleCombatant) As Boolean
         'check bounds

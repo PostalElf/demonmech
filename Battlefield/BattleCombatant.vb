@@ -69,6 +69,18 @@
     End Function
     Public Sub RemoveCombatLimb(ByVal CombatLimb As CombatLimb)
         CombatLimbs.Remove(CombatLimb)
+        If CombatLimb.isVital = True Then
+            'vital limb removed
+            'check to see if any vital limbs remain
+            Dim hasVitalRemaining As Boolean = False
+            For Each cl In CombatLimbs
+                If cl.IsVital = True Then hasVitalRemaining = True : Exit For
+            Next
+            If hasVitalRemaining = True Then Exit Sub
+
+            'no vital limbs remain; destroy
+            Battlefield.RemoveObject(Me)
+        End If
     End Sub
     Public Sub RemoveCombatLimb(ByVal index As Integer)
         RemoveCombatLimb(CombatLimbs(index))

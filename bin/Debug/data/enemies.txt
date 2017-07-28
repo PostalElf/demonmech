@@ -2,4 +2,6 @@
 Char: b
 AP: 5
 MP: 1
-Limb: Head|10|0|Piercing
+Limb: Head|Vital|10|0|Piercing
+Limb: Left Arm||4|0|
+Limb: Right Arm||4|0|

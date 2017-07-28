@@ -16,10 +16,10 @@ Component: Motor
 Component: Material - Plate
 Weight: 1
 Defence: Infernal
-Accuracy: 50
+Accuracy: 100
 Range: 1
 DamageType: Slashing
-DamageAmount: 2
+DamageAmount: 10
 Hands: 1
 Health: 10
 

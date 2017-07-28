@@ -15,6 +15,12 @@
             Return _Health
         End Get
     End Property
+    Private _IsVital As Boolean
+    Public ReadOnly Property IsVital As Boolean
+        Get
+            Return _IsVital
+        End Get
+    End Property
     Private Dodge As Integer
     Private Defences As New List(Of DamageType)
 
@@ -36,6 +42,7 @@
             .Owner = owner
 
             .Name = value(ac.N)
+            If value(ac.N) = "Vital" Then ._IsVital = True Else ._IsVital = False
             ._Health = CInt(value(ac.N))
             .Dodge = CInt(value(ac.N))
             Dim defences As String() = value(ac.N).Split(",")
@@ -62,7 +69,7 @@
                 totalDmg += dmg
             Next
 
-            If _Damage > _Health Then Destroyed()
+            If _Damage >= _Health Then Destroyed()
             TargetedByAttack = "Hit " & totalDmg
         Else
             'miss

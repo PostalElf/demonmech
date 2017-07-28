@@ -27,7 +27,7 @@ Public Module Common
 End Module
 
 Public Class AutoIncrementer
-    Private Shared Counter As Integer = 0
+    Private Counter As Integer = 0
     Public Function N() As Integer
         N = Counter
         Counter += 1

@@ -1,5 +1,6 @@
 ﻿Public MustInherit Class BattleObject
     Public Name As String
+    Public Battlefield As Battlefield
     Public X As Integer
     Public Y As Integer
     Public ReadOnly Property C As Char

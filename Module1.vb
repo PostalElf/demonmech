@@ -32,6 +32,8 @@
             battlefield.ConsoleWrite()
             Console.ForegroundColor = ConsoleColor.White
             mech.ConsoleWriteReport()
+            Reports.ConsoleReport("  ")
+            Reports.Clear()
             Select Case Console.ReadKey.Key
                 Case ConsoleKey.NumPad8 : mech.MoveCombatant(battlefield, "N"c)
                 Case ConsoleKey.NumPad4 : mech.MoveCombatant(battlefield, "W"c)
@@ -104,7 +106,8 @@
 
         Dim targetLimbIndex As Integer = ChooseFromList(target, "CombatLimbs", "Select target limb: ")
         If targetLimbIndex = -1 Then Exit Sub
-        Console.WriteLine(target.TargetedByAttack(targetLimbIndex, weapon))
+        Dim report As String = target.TargetedByAttack(targetLimbIndex, weapon)
+        Console.WriteLine(report)
         Console.ReadKey()
     End Sub
 End Module

@@ -80,6 +80,7 @@
 
             'no vital limbs remain; destroy
             Battlefield.RemoveObject(Me)
+            Reports.Add(Name & " was destroyed!")
         End If
     End Sub
     Public Sub RemoveCombatLimb(ByVal index As Integer)

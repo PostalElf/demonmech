@@ -103,6 +103,7 @@
     <Compile Include="Mech\MechPart\Component.vb" />
     <Compile Include="Mech\MechPart\DamageType.vb" />
     <Compile Include="Dev\SquareBracketIO.vb" />
+    <Compile Include="Reports.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

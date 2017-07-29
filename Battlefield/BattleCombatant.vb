@@ -70,7 +70,7 @@
         Else
             'hit X
             Dim totalDmg As Integer = CInt(rawReport)
-            Reports.Add(weapon.Name & " hit " & StringPossessive(Name) & targetLimb.ToString & " for " & totalDmg & " dmg.")
+            Reports.Add(weapon.Name & " hits " & StringPossessive(Name) & " " & targetLimb.ToString & " for " & totalDmg & " dmg.")
             If targetLimb.Damage >= targetLimb.Health Then targetLimb.Destroyed()
         End If
     End Sub

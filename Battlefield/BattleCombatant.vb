@@ -61,14 +61,22 @@
         bf.PlaceObject(newX, newY, Me)
     End Sub
     Public MustOverride Sub ConsoleWrite(ByVal targetListName As String)
-    Public Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal attackAccuracy As Integer, ByVal attackDamage As Dictionary(Of DamageType, Integer)) As String
-        Return CombatLimbs(LimbIndex).TargetedByAttack(attackAccuracy, attackDamage)
-    End Function
-    Public Function TargetedByAttack(ByVal LimbIndex As Integer, ByVal weapon As MechPart) As String
-        Return TargetedByAttack(LimbIndex, weapon.Accuracy, weapon.Damage)
-    End Function
+    Public Sub TargetedByAttack(ByVal LimbIndex As Integer, ByVal weapon As MechPart)
+        Dim targetLimb As CombatLimb = CombatLimbs(LimbIndex)
+        Dim rawReport As String = targetLimb.TargetedByAttack(weapon.Accuracy, weapon.Damage)
+        If rawReport = "Miss" Then
+            'miss
+            Reports.Add(weapon.Name & " missed " & StringPossessive(Name) & targetLimb.ToString & "!")
+        Else
+            'hit X
+            Dim totalDmg As Integer = CInt(rawReport)
+            Reports.Add(weapon.Name & " hit " & StringPossessive(Name) & targetLimb.ToString & " for " & totalDmg & " dmg.")
+            If targetLimb.Damage >= targetLimb.Health Then targetLimb.Destroyed()
+        End If
+    End Sub
     Public Sub RemoveCombatLimb(ByVal CombatLimb As CombatLimb)
         CombatLimbs.Remove(CombatLimb)
+        Reports.Add(StringPossessive(Name) & " " & CombatLimb.ToString & " was destroyed!")
         If CombatLimb.isVital = True Then
             'vital limb removed
             'check to see if any vital limbs remain
@@ -80,7 +88,7 @@
 
             'no vital limbs remain; destroy
             Battlefield.RemoveObject(Me)
-            Reports.Add(Name & " was destroyed!")
+            Reports.Add(Name & " was annihilated!")
         End If
     End Sub
     Public Sub RemoveCombatLimb(ByVal index As Integer)

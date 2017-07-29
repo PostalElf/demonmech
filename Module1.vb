@@ -42,7 +42,6 @@
                 Case ConsoleKey.A : Attack(battlefield, mech)
                 Case ConsoleKey.X : mech.ConsoleWriteReportExamine()
                 Case ConsoleKey.E : EquipWeapon(mech)
-                Case ConsoleKey.D : TestDamageCombatLimb(mech)
                 Case ConsoleKey.Enter : mech.EndTurn()
             End Select
             Console.Clear()
@@ -65,17 +64,6 @@
         Dim selection As Integer = ChooseFromList(mech, "HandWeaponsInventory", "Select weapon to equip: ")
         If selection = -1 Then Exit Sub
         mech.EquipHandWeapon(selection)
-    End Sub
-    Private Sub TestDamageCombatLimb(ByVal mech As Mech)
-        Dim selection As Integer = ChooseFromList(mech, "CombatLimbs", "Select limb to damage: ")
-        If selection = -1 Then Exit Sub
-
-        Dim damageDictionary As New Dictionary(Of DamageType, Integer)
-        For Each dt In [Enum].GetValues(GetType(DamageType))
-            damageDictionary.Add(dt, 1)
-        Next
-
-        mech.TargetedByAttack(selection, 200, damageDictionary)
     End Sub
     Private Sub Attack(ByVal battlefield As Battlefield, ByVal mech As Mech)
         Dim selection As Integer = ChooseFromList(mech, "Weapons", "Select weapon to use: ")
@@ -106,8 +94,6 @@
 
         Dim targetLimbIndex As Integer = ChooseFromList(target, "CombatLimbs", "Select target limb: ")
         If targetLimbIndex = -1 Then Exit Sub
-        Dim report As String = target.TargetedByAttack(targetLimbIndex, weapon)
-        Console.WriteLine(report)
-        Console.ReadKey()
+        target.TargetedByAttack(targetLimbIndex, weapon)
     End Sub
 End Module

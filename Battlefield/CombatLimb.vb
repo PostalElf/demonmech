@@ -68,15 +68,13 @@
                 _Damage += dmg
                 totalDmg += dmg
             Next
-
-            If _Damage >= _Health Then Destroyed()
-            TargetedByAttack = "Hit " & totalDmg
+            Return totalDmg
         Else
             'miss
             Return "Miss"
         End If
     End Function
-    Private Sub Destroyed()
+    Public Sub Destroyed()
         Owner.RemoveCombatLimb(Me)
         Owner = Nothing
         If MechPart Is Nothing = False Then
@@ -90,5 +88,8 @@
         If Dodge > 0 Then total &= " - Dodge " & Dodge & "% "
         If Defences.Count > 0 Then total &= "vs " & FormatCommaList(Of DamageType)(Defences)
         Return total
+    End Function
+    Public Overrides Function ToString() As String
+        Return Name
     End Function
 End Class

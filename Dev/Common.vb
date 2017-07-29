@@ -24,6 +24,10 @@ Public Module Common
         Next
         Return Nothing
     End Function
+    Public Function StringPossessive(ByVal value As String) As String
+        Dim lastChar As Char = value(value.Length - 1)
+        If lastChar = "s"c OrElse lastChar = "S"c Then Return value & "'" Else Return value & "'s"
+    End Function
 End Module
 
 Public Class AutoIncrementer

@@ -173,7 +173,8 @@
                 'square filled with obstacle
                 'return movecost + 1 if obstacle is crushable and combatant is crusher; else return false
                 Dim obstacle As BattleObstacle = CType(Field(x, y), BattleObstacle)
-                If obstacle.CrushCost <> -1 AndAlso battlecombatant.IsCrusher = True Then Return MoveCostPerSquare + 1 Else Return -1
+                Dim crushCost As Integer = obstacle.CrushCost
+                If crushCost <> -1 AndAlso battlecombatant.IsCrusher = True Then Return MoveCostPerSquare + crushCost Else Return -1
             Else
                 'square filled with something that cannot be crushed; return false
                 Return -1

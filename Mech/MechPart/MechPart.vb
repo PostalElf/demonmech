@@ -45,6 +45,7 @@
                 .MPPerSeal += Component.MPPerSeal
 
                 .Accuracy += Component.Accuracy
+                .APCost += Component.APCost
                 .Aim += Component.Aim
                 .AimAP += Component.AimAP
                 .Range += Component.Range
@@ -68,8 +69,11 @@
     Public Function Report() As String Implements iReportable.Report
         Dim total As String = Name & " [" & Slot & "]"
         If IsWeapon = True Then
-            total &= ": " & "r" & Range & " - " & Accuracy & "%"
-            If AimAP > 0 Then total &= " (+" & Aim & " x" & AimAP & ")"
+            total &= ": "
+            total &= APCost & "AP "
+            total &= "r" & Range & " - "
+            total &= Accuracy & "%"
+            If AimAP > 0 Then total &= " (+" & AimAP & " x" & Aim & ")"
             total &= " - "
             For Each key In Damage.Keys
                 If Damage(key) = 0 Then Continue For

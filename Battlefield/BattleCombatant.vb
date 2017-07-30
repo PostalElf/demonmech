@@ -38,8 +38,6 @@
     End Property
 
     Public Sub MoveCombatant(ByVal bf As Battlefield, ByVal direction As Char)
-        If MovementPoints < 1 AndAlso ActionPoints < 1 Then Exit Sub
-
         Dim newX As Integer = X
         Dim newY As Integer = Y
 
@@ -50,14 +48,21 @@
             Case "W"c : newX -= 1
         End Select
 
-        If bf.CheckMove(newX, newY, Me) = False Then Exit Sub
+        'get movecost, then check for illegal movement (-1) or insufficient AP + MP
+        Dim moveCost As Integer = bf.GetMoveCost(newX, newY, Me)
+        If moveCost = -1 Then Exit Sub
+        If moveCost > ActionPoints + MovementPoints Then Exit Sub
 
+        'spend MP first, then if there's leftover spend AP
         If MovementPoints > 0 Then
-            MovementPoints -= 1
-        Else
-            ActionPoints -= 1
+            MovementPoints -= moveCost
+            If MovementPoints < 0 Then moveCost = Math.Abs(MovementPoints) : MovementPoints = 0 Else moveCost = 0
+        End If
+        If moveCost > 0 Then
+            ActionPoints -= moveCost
         End If
 
+        'now actually put the damned thing on the map
         bf.PlaceObject(newX, newY, Me)
     End Sub
     Public MustOverride Sub ConsoleWrite(ByVal targetListName As String)

@@ -42,7 +42,7 @@
                 Case ConsoleKey.A : Attack(battlefield, mech)
                 Case ConsoleKey.X : mech.ConsoleWriteReportExamine()
                 Case ConsoleKey.E : EquipWeapon(mech)
-                Case ConsoleKey.Enter : mech.EndTurn()
+                Case ConsoleKey.Spacebar : battlefield.EndPlayerTurn()
             End Select
             Console.Clear()
         End While
@@ -70,6 +70,8 @@
         If selection = -1 Then Exit Sub
         Dim weapon As MechPart = mech.Weapons(selection)
 
+        If weapon.APCost > mech.ActionPoints Then Console.WriteLine("Insufficient AP to use weapon!") : Console.ReadKey() : Exit Sub
+
         Dim targets As List(Of BattleCombatant) = mech.WeaponTargets(battlefield, weapon)
         If targets.Count = 0 Then
             Console.WriteLine("No available targets!")
@@ -94,6 +96,7 @@
 
         Dim targetLimbIndex As Integer = ChooseFromList(target, "CombatLimbs", "Select target limb: ")
         If targetLimbIndex = -1 Then Exit Sub
+        mech.ActionPoints -= weapon.APCost
         target.TargetedByAttack(targetLimbIndex, weapon)
     End Sub
 End Module

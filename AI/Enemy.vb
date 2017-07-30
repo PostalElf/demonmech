@@ -48,7 +48,6 @@
     Public Overrides Function ToString() As String
         Return Name
     End Function
-
     Public Overrides Sub ConsoleWrite(ByVal targetListName As String)
         Dim targetList As System.Collections.Generic.IEnumerable(Of iReportable)
         Select Case targetListName
@@ -62,5 +61,9 @@
             Console.WriteLine(counter & ") " & thing.Report)
             counter += 1
         Next
+    End Sub
+
+    Public Sub TakeTurn()
+
     End Sub
 End Class

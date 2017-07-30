@@ -5,6 +5,9 @@ Component: Heat Exchanger
 Component: Gun Chasis
 Weight: 1
 Accuracy: 60
+APCost: 3
+Aim: 2
+AimAP: 1
 Range: 3
 DamageType: Energy
 DamageAmount: 1
@@ -17,10 +20,11 @@ Component: Material - Plate
 Weight: 1
 Defence: Infernal
 Accuracy: 100
+APCost: 2
 Range: 1
 DamageType: Slashing
 DamageAmount: 10
-Hands: 1
+ExtraHands: 1
 Health: 10
 
 [Nanocarbon Mech Chasis]

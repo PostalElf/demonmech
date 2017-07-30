@@ -1,6 +1,6 @@
 ﻿Public Class Component
     Public Name As String
-    Public Slot As String                       'category for components, slot for mechParts
+    Public Slot As String                       'category for components, slot for mechParts; also contains information on how many hands the mech needs to equip it
     Public Weight As Integer                    'impact on mech agility
     Public Agility As Integer                   'impact on mech agility
     Public Dodge As Integer                     'accuracy penalty to hits on the mechpart'
@@ -8,12 +8,13 @@
     Public Health As Integer                    'how much damage the mechpart can take
     Public ExtraHands As Integer                'how many hands it adds to the mech
     Public InventorySpace As Integer            'how much inventory space for handweapons it adds
-    Public AP As Integer                        'action points
+    Public AP As Integer                        'action points the mech gains
     Public APPerSeal As Integer                 'how many AP the mech gains per seal undone
-    Public MP As Integer                        'movement points (free movement)
+    Public MP As Integer                        'movement points (free movement) the mech gains
     Public MPPerSeal As Integer                 'how much MP the mech gains per seal undone
 
     Public Accuracy As Integer                  'base percentile accuracy
+    Public APCost As Integer                    'base AP cost to use weapon
     Public Aim As Integer                       'how much accuracy weapon gains per additional AP spent aiming
     Public AimAP As Integer                     'how much AP can be spent aiming
     Public Range As Integer                     'how many squares away the weapon can hit
@@ -60,7 +61,7 @@
             Case "Dodge" : Dodge = CInt(value)
             Case "Defence" : Defences.Add(String2Enum(Of DamageType)(value))
             Case "Health" : Health = CInt(value)
-            Case "Hands" : ExtraHands = CInt(value)
+            Case "ExtraHands" : ExtraHands = CInt(value)
             Case "Inventory" : InventorySpace += CInt(value)
             Case "AP" : AP += CInt(value)
             Case "APPerSeal" : APPerSeal += CInt(value)
@@ -68,6 +69,7 @@
             Case "MPPerSeal" : MPPerSeal += CInt(value)
 
             Case "Accuracy" : Accuracy = CInt(value)
+            Case "APCost" : APCost = CInt(value)
             Case "Aim" : Aim = CInt(value)
             Case "AimAP" : AimAP = CInt(value)
             Case "Range" : Range = CInt(value)

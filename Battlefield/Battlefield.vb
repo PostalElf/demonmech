@@ -1,11 +1,13 @@
 ﻿Public Class Battlefield
     Private Field As BattleObject(,)
+    Private MoveCostPerSquare As Integer = 2
     Private Terrain As BattlefieldTerrain
     Private XRange As Integer
     Private YRange As Integer
 
     Private Camera As Camera
     Private Mech As Mech
+    Private Enemies As New List(Of Enemy)
 
     Public Shared Function Construct(ByVal mech As Mech, ByVal xRange As Integer, ByVal yRange As Integer, ByVal camera As Camera, ByVal terrain As BattlefieldTerrain, Optional ByVal obstacleDensity As Integer = 50) As Battlefield
         Dim bf As New Battlefield
@@ -23,8 +25,7 @@
             Dim xMidpoint As Integer = Math.Floor(xRange / 2)
             Dim mechX As Integer = xMidpoint + Rng.Next(-2, 2)
             If mechX > xRange Then mechX = xRange
-            .Mech = mech
-            .PlaceObject(mechX, mechY, .Mech)
+            .PlaceObject(mechX, mechY, mech)
 
             'generate map obstacles
             Dim squareArea As Integer = (xRange - 1) * (yRange - 1)
@@ -33,6 +34,16 @@
         End With
         Return bf
     End Function
+    Public Sub Dispose()
+        For x = 0 To XRange
+            For y = 0 To YRange
+                Dim current As BattleObject = Field(x, y)
+                If current Is Nothing = False Then
+                    current.Battlefield = Nothing
+                End If
+            Next
+        Next
+    End Sub
     Private Sub GenerateObstacles(ByVal density As Integer)
         Dim emptySquares As New List(Of xy)
         For x = 0 To XRange
@@ -89,7 +100,7 @@
     Private Sub PlaceObstacle(ByVal startSquare As xy, ByVal obstacle As BattleObstacle)
         For x = startSquare.X To (startSquare.X + obstacle.XWidth - 1)
             For y = startSquare.Y To (startSquare.Y + obstacle.YWidth - 1)
-                Field(x, y) = BattleObstacle.Construct(obstacle)
+                PlaceObject(x, y, BattleObstacle.Construct(obstacle))
             Next
         Next
     End Sub
@@ -127,41 +138,49 @@
         If x < 0 OrElse x > XRange OrElse y < 0 OrElse y > YRange Then Exit Sub
 
         If Field(battleObject.X, battleObject.Y) Is Nothing = False Then
-            'existing object on field
-            'remove from original square first
+            'existing object on field; remove from original square first
             Field(battleObject.X, battleObject.Y) = Nothing
         End If
 
         battleObject.X = x
         battleObject.Y = y
-        If battleObject.Battlefield Is Nothing Then battleObject.Battlefield = Me
         Field(x, y) = battleObject
+        If TypeOf battleObject Is BattleObstacle = False AndAlso battleObject.Battlefield Is Nothing Then InitialiseObject(battleObject)
+    End Sub
+    Private Sub InitialiseObject(ByVal battleObject As BattleObject)
+        battleObject.Battlefield = Me
+
+        Select Case battleObject.GetType
+            Case GetType(Mech) : Mech = battleObject
+            Case GetType(Enemy) : If Enemies.Contains(battleObject) = False Then Enemies.Add(battleObject)
+        End Select
     End Sub
     Public Sub RemoveObject(ByVal battleObject As BattleObject)
+        If TypeOf battleObject Is Enemy Then Enemies.Remove(battleObject)
         battleObject.Battlefield = Nothing
         Field(battleObject.X, battleObject.Y) = Nothing
     End Sub
-    Public Function CheckMove(ByVal x As Integer, ByVal y As Integer, ByVal battlecombatant As BattleCombatant) As Boolean
+    Public Function GetMoveCost(ByVal x As Integer, ByVal y As Integer, ByVal battlecombatant As BattleCombatant) As Integer
         'check bounds
-        If x < 0 Then Return False
-        If x > XRange Then Return False
-        If y < 0 Then Return False
-        If y > YRange Then Return False
+        If x < 0 Then Return -1
+        If x > XRange Then Return -1
+        If y < 0 Then Return -1
+        If y > YRange Then Return -1
 
         'check if square is filled
         If Field(x, y) Is Nothing = False Then
             If TypeOf (Field(x, y)) Is BattleObstacle Then
                 'square filled with obstacle
-                'return true if obstacle is crushable and combatant is crusher; else return false
+                'return movecost + 1 if obstacle is crushable and combatant is crusher; else return false
                 Dim obstacle As BattleObstacle = CType(Field(x, y), BattleObstacle)
-                If obstacle.IsCrushable = True AndAlso battlecombatant.IsCrusher = True Then Return True Else Return False
+                If obstacle.IsCrushable = True AndAlso battlecombatant.IsCrusher = True Then Return MoveCostPerSquare + 1 Else Return -1
             Else
                 'square filled with something that cannot be crushed; return false
-                Return False
+                Return -1
             End If
         Else
             'square is empty
-            Return True
+            Return MoveCostPerSquare
         End If
     End Function
     Public Function GetSquares(ByVal originX As Integer, ByVal originY As Integer, ByVal range As Integer, ByVal direction As Char) As List(Of BattleObject)
@@ -195,6 +214,10 @@
     End Function
     Public Sub EndPlayerTurn()
         Mech.EndTurn()
+        For n = Enemies.Count - 1 To 0
+            Dim enemy As Enemy = Enemies(n)
+            enemy.TakeTurn()
+        Next
     End Sub
 
     Public Structure xy

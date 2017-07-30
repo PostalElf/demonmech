@@ -1,7 +1,6 @@
 ﻿Public Class Mech
     Inherits BattleCombatant
     Private DesignName As String
-    Private MechParts As New List(Of MechPart)
     Private MechDesignModifiers As Component
     Private ReadOnly Property Weight As Integer
         Get
@@ -114,7 +113,7 @@
 
     Private HandWeaponsInventory As New List(Of MechPart)
     Private HandWeaponsEquipped As New List(Of MechPart)
-    Public ReadOnly Property Weapons As List(Of MechPart)
+    Public Overrides ReadOnly Property Weapons As List(Of MechPart)
         Get
             Dim total As New List(Of MechPart)
             For Each hw In HandWeaponsEquipped
@@ -122,31 +121,6 @@
             Next
             For Each mp In MechParts
                 If mp.IsDestroyed = False AndAlso mp.IsWeapon = True Then total.Add(mp)
-            Next
-            Return total
-        End Get
-    End Property
-    Public ReadOnly Property WeaponTargets(ByVal battlefield As Battlefield, ByVal weapon As MechPart) As List(Of BattleCombatant)
-        Get
-            Dim total As New List(Of BattleCombatant)
-            Dim directions As Char() = {"N"c, "E"c, "S"c, "W"c}
-            Dim range As Integer = weapon.Range
-
-            For Each d In directions
-                Dim squares As List(Of BattleObject) = battlefield.GetSquares(X, Y, range, d)
-                Dim highestCover As BattleObstacleCover = BattleObstacleCover.None
-                For Each square In squares
-                    If square Is Nothing Then Continue For
-                    If TypeOf square Is BattleObstacle Then
-                        'if there's an obstacle, add it to highest cover
-                        Dim obstacle As BattleObstacle = CType(square, BattleObstacle)
-                        If highestCover < obstacle.Cover Then highestCover = obstacle.Cover
-                    ElseIf TypeOf square Is BattleCombatant Then
-                        'if it's a combatant, check if there's cover previously in the way
-                        'if there's cover, and weapon ignores the cover, add target to list
-                        If weapon.CoverIgnore >= highestCover Then total.Add(square)
-                    End If
-                Next
             Next
             Return total
         End Get
@@ -210,10 +184,6 @@
         HandWeaponsInventory.Add(mechpart)
         Return Nothing
     End Function
-    Public Sub EndTurn()
-        ActionPoints = ActionPointsMax
-        MovementPoints = MovementPointsMax
-    End Sub
 
     Public Sub ConsoleWriteReport()
         Dim total As String = "  " & Name & " - "

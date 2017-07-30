@@ -217,7 +217,7 @@
         Mech.EndTurn()
         For n = Enemies.Count - 1 To 0
             Dim enemy As Enemy = Enemies(n)
-            enemy.TakeTurn()
+            enemy.TakeTurn(Mech)
         Next
     End Sub
 

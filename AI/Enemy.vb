@@ -19,7 +19,7 @@
         End Get
     End Property
 
-    Private Weapons As New List(Of MechPart)
+    End Property
 
     Public Shared Function Load(ByVal enemyName As String)
         Const path = "data/enemies.txt"
@@ -63,7 +63,7 @@
         Next
     End Sub
 
-    Public Sub TakeTurn()
+    Public Sub TakeTurn(ByVal mech As Mech)
 
     End Sub
 End Class

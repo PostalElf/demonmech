@@ -33,6 +33,7 @@
             End If
 
             For Each Component In Components
+                If Component.IsVital = True Then .IsVital = True
                 .Weight += Component.Weight
                 .Agility += Component.Agility
                 .Dodge += Component.Dodge
@@ -57,6 +58,23 @@
             If .Weight < 0 Then .Weight = 1
         End With
         Return MechPart
+    End Function
+    Public Shared Shadows Function Construct(ByVal value As String()) As MechPart
+        Dim mp As New MechPart
+        With mp
+            Dim ac As New AutoIncrementer
+
+            .Name = value(ac.N)
+            If value(ac.N) = "Vital" Then .IsVital = True Else .IsVital = False
+            .Health = CInt(value(ac.N))
+            .Dodge = CInt(value(ac.N))
+            Dim defences As String() = value(ac.N).Split(",")
+            For Each defence In defences
+                Dim modDefence As DamageType = String2Enum(Of DamageType)(defence)
+                If modDefence <> 0 Then .Defences.Add(modDefence)
+            Next
+        End With
+        Return mp
     End Function
     Public Sub New()
         For Each dt In [Enum].GetValues(GetType(DamageType))

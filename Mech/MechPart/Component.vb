@@ -1,6 +1,7 @@
 ﻿Public Class Component
     Public Name As String
     Public Slot As String                       'category for components, slot for mechParts; also contains information on how many hands the mech needs to equip it
+    Public IsVital As Boolean                   'determines if limb is vital to the survival of the mech
     Public Weight As Integer                    'impact on mech agility
     Public Agility As Integer                   'impact on mech agility
     Public Dodge As Integer                     'accuracy penalty to hits on the mechpart'

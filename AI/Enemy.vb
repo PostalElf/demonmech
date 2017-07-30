@@ -50,7 +50,12 @@
             Case "Char" : _C = CChar(value)
             Case "AP" : _ActionPointsMax = CInt(value)
             Case "MP" : _MovementPointsMax = CInt(value)
-            Case "Limb" : Dim combatlimb As CombatLimb = combatlimb.Construct(Me, value.Split("|")) : If combatlimb Is Nothing = False Then CombatLimbs.Add(combatlimb)
+            Case "Limb"
+                Dim mechPart As MechPart = mechPart.Construct(value.Split("|"))
+                If mechPart Is Nothing = True Then Exit Sub
+                mechPart.Owner = Me
+                MechParts.Add(mechPart)
+                CombatLimbs.Add(CombatLimb.Construct(mechPart))
         End Select
     End Sub
     Public Overrides Function ToString() As String

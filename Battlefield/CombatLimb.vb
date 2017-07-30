@@ -30,28 +30,11 @@
             .Name = mechpart.Name
             .Owner = mechpart.Owner
             ._Health = mechpart.Health
+            ._IsVital = mechpart.IsVital
             .Dodge = mechpart.Dodge
             .Defences = mechpart.Defences
         End With
         Return combatLimb
-    End Function
-    Public Shared Function Construct(ByRef owner As BattleCombatant, ByVal value As String()) As CombatLimb
-        Dim cl As New CombatLimb
-        With cl
-            Dim ac As New AutoIncrementer
-            .Owner = owner
-
-            .Name = value(ac.N)
-            If value(ac.N) = "Vital" Then ._IsVital = True Else ._IsVital = False
-            ._Health = CInt(value(ac.N))
-            .Dodge = CInt(value(ac.N))
-            Dim defences As String() = value(ac.N).Split(",")
-            For Each defence In defences
-                Dim modDefence As DamageType = String2Enum(Of DamageType)(defence)
-                If modDefence <> 0 Then .Defences.Add(modDefence)
-            Next
-        End With
-        Return cl
     End Function
 
     Public Function TargetedByAttack(ByVal attackAccuracy As Integer, ByVal damage As Dictionary(Of DamageType, Integer)) As String

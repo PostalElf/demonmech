@@ -5,7 +5,7 @@
     Public Cover As BattleObstacleCover
     Public XWidth As Integer
     Public YWidth As Integer
-    Public IsCrushable As Boolean = False
+    Public CrushCost As Integer = 0
 
     Public Shared Function Construct(ByVal obstacleName As String) As BattleObstacle
         Dim obstacle As New BattleObstacle
@@ -15,21 +15,21 @@
                 Case "Tank Trap"
                     .C = "^"
                     .CColour = ConsoleColor.Gray
-                    .IsCrushable = True
+                    .CrushCost = 1
                     .Cover = BattleObstacleCover.Low
                     .XWidth = 1
                     .YWidth = 1
                 Case "Prefab House"
                     .C = "H"
                     .CColour = ConsoleColor.Gray
-                    .IsCrushable = True
+                    .CrushCost = 2
                     .Cover = BattleObstacleCover.High
                     .XWidth = 2
                     .YWidth = 2
                 Case "Factory"
                     .C = "F"
                     .CColour = ConsoleColor.Gray
-                    .IsCrushable = False
+                    .CrushCost = -1
                     .Cover = BattleObstacleCover.Total
                     .XWidth = 4
                     .YWidth = 2
@@ -44,7 +44,7 @@
             .Name = obstacle.Name
             .C = obstacle.C
             .CColour = obstacle.CColour
-            .IsCrushable = obstacle.IsCrushable
+            .CrushCost = obstacle.CrushCost
             .Cover = obstacle.Cover
         End With
         Return total

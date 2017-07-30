@@ -19,6 +19,14 @@
         End Get
     End Property
 
+    Public Overrides ReadOnly Property Weapons As List(Of MechPart)
+        Get
+            Dim total As New List(Of MechPart)
+            For Each mp In MechParts
+                If mp.IsDestroyed = False AndAlso mp.IsWeapon = True Then total.Add(mp)
+            Next
+            Return total
+        End Get
     End Property
 
     Public Shared Function Load(ByVal enemyName As String)
@@ -65,5 +73,7 @@
 
     Public Sub TakeTurn(ByVal mech As Mech)
 
+        'end turn
+        EndTurn()
     End Sub
 End Class

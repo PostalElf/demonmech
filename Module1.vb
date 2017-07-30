@@ -96,7 +96,6 @@
 
         Dim targetLimbIndex As Integer = ChooseFromList(target, "CombatLimbs", "Select target limb: ")
         If targetLimbIndex = -1 Then Exit Sub
-        mech.ActionPoints -= weapon.APCost
-        target.TargetedByAttack(targetLimbIndex, weapon)
+        mech.PerformsAttack(target, targetLimbIndex, weapon)
     End Sub
 End Module

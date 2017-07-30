@@ -66,6 +66,12 @@
         bf.PlaceObject(newX, newY, Me)
     End Sub
     Public MustOverride Sub ConsoleWrite(ByVal targetListName As String)
+    Public Sub PerformsAttack(ByVal target As BattleCombatant, ByVal targetLimbIndex As Integer, ByVal weapon As MechPart)
+        If ActionPoints < weapon.APCost Then Exit Sub
+
+        ActionPoints -= weapon.APCost
+        target.TargetedByAttack(targetLimbIndex, weapon)
+    End Sub
     Public Sub TargetedByAttack(ByVal LimbIndex As Integer, ByVal weapon As MechPart)
         Dim targetLimb As CombatLimb = CombatLimbs(LimbIndex)
         Dim rawReport As String = targetLimb.TargetedByAttack(weapon.Accuracy, weapon.Damage)
